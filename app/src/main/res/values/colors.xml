@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF178AA1</color>
+    <color name="colorPrimaryDark">#FF178AA1</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="colorInicio">#FF178AA1</color>
+    <color name="branco">#FFFFFFFF</color>
+    <color name="ligacao">#28B6BE</color>
+    <color name="composto">#053E7D</color>
+    <color name="informacoes">#178a91</color>
+</resources>
