@@ -11,13 +11,11 @@ public class ControleCadeia implements View.OnClickListener {
 
     private Context c;
     private Composto_img ci;
-    private Molecula moleculaInicial;
 
     public ControleCadeia(Context c, Composto_img ci) {
         this.c = c;
         this.ci = ci;
-        moleculaInicial = new Molecula((int)ci.getComposto().getX(),(int)ci.getComposto().getY());
-        Cadeia.getCadeia().getMoleculas().add(moleculaInicial);
+
     }
 
     @Override

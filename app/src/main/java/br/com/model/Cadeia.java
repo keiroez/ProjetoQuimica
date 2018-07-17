@@ -1,9 +1,10 @@
 package br.com.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cadeia {
-    private ArrayList<Molecula> moleculas;
+    private List<Molecula> moleculas;
 
     private Cadeia(){
         moleculas = new ArrayList<>();
@@ -16,7 +17,7 @@ public class Cadeia {
         return cadeia;
     }
 
-    public ArrayList<Molecula> getMoleculas() {
+    public List<Molecula> getMoleculas() {
         return moleculas;
     }
 }

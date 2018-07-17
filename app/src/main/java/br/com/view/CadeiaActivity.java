@@ -27,14 +27,6 @@ public class CadeiaActivity extends AppCompatActivity {
         btGerar = findViewById(R.id.bt_gerar);
         btLimpar = findViewById(R.id.bt_limpar);
 
-        btLimpar.setOnClickListener(new ControleActivityCadeia(this));
-
-        init();
-
-        zoomLayout.setVisibility(View.VISIBLE);
-    }
-
-    public void init(){
         Composto_img ci = new Composto_img(this, 150, 700);
 
         relativeLayout.addView(ci.getComposto());
@@ -45,6 +37,11 @@ public class CadeiaActivity extends AppCompatActivity {
         relativeLayout.addView(ci.getElemento2());
         relativeLayout.addView(ci.getQtdElemento1());
         relativeLayout.addView(ci.getQtdElemento2());
+
+
+        btLimpar.setOnClickListener(new ControleActivityCadeia(this, ci));
+
+        zoomLayout.setVisibility(View.VISIBLE);
     }
 
     public RelativeLayout getRelativeLayout() {
