@@ -253,20 +253,6 @@ public class Composto_img {
         }
 
 
-
-
-//        //definimos para o botão do layout um clickListener
-//        view.findViewById(R.id.bt_mais_elem1).setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View arg0) {
-//                //exibe um Toast informativo.
-//
-//
-//                Toast.makeText(((CadeiaActivity) c), "alerta.dismiss()", Toast.LENGTH_SHORT).show();
-//                //desfaz o alerta.
-//                //alerta.dismiss();
-//            }
-//        });
-
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setView(view);
         alerta = builder.create();
