@@ -8,6 +8,24 @@
     android:layout_height="match_parent"
     android:background="@color/colorInicio">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@color/ligacao"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="Informações:"
+            android:textColor="@color/branco" />
+    </LinearLayout>
+
     <libs.ZoomLayout
         android:id="@+id/zoom_layout"
         android:layout_width="match_parent"
@@ -18,7 +36,7 @@
 
         <RelativeLayout
             android:id="@+id/rlayout"
-            android:layout_width="700dp"
+            android:layout_width="670dp"
             android:layout_height="500dp"
             android:layout_margin="10dp"
             android:background="@android:color/white"
@@ -28,26 +46,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:layout_margin="10dp"
-        android:background="@color/ligacao">
-
-        <TextView
-            android:id="@+id/tv_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Informações:"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/branco"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0"
         android:orientation="horizontal">
 

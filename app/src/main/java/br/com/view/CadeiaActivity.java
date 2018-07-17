@@ -22,10 +22,9 @@ public class CadeiaActivity extends AppCompatActivity {
         relativeLayout = findViewById(R.id.rlayout);
 
 
-        Composto_img ci = new Composto_img(this, 150, 600);
+        Composto_img ci = new Composto_img(this, 150, 700);
 
         relativeLayout.addView(ci.getComposto());
-        relativeLayout.addView(ci.getAddLeft());
         relativeLayout.addView(ci.getAddRight());
         relativeLayout.addView(ci.getAddDown());
         relativeLayout.addView(ci.getAddUp());
