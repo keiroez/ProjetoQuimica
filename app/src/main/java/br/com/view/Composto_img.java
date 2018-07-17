@@ -36,10 +36,12 @@ public class Composto_img {
         ligacaoRight = new ImageView(context);
         ligacaoUp = new ImageView(context);
 
-        ligacaoLeft.setOnClickListener(new ControleCadeia(c,this));
-        ligacaoDown.setOnClickListener(new ControleCadeia(c,this));
-        ligacaoUp.setOnClickListener(new ControleCadeia(c,this));
-        ligacaoRight.setOnClickListener(new ControleCadeia(c,this));
+        ControleCadeia controleCadeia = new ControleCadeia(c,this);
+
+        ligacaoLeft.setOnClickListener(controleCadeia);
+        ligacaoDown.setOnClickListener(controleCadeia);
+        ligacaoUp.setOnClickListener(controleCadeia);
+        ligacaoRight.setOnClickListener(controleCadeia);
 
         composto.setBackgroundResource(R.drawable.ic_circulo_40dp);
         addDown.setBackgroundResource(R.drawable.ic_add_24dp);
@@ -85,11 +87,11 @@ public class Composto_img {
         qtdElemento2.setY(elemento2.getY()+35);
 
 
-        addUp.setOnClickListener(new ControleCadeia(context,this));
-        addDown.setOnClickListener(new ControleCadeia(context,this));
-        addRight.setOnClickListener(new ControleCadeia(context,this));
-        addLeft.setOnClickListener(new ControleCadeia(context, this));
-        composto.setOnClickListener(new ControleCadeia(context,this));
+        addUp.setOnClickListener(controleCadeia);
+        addDown.setOnClickListener(controleCadeia);
+        addRight.setOnClickListener(controleCadeia);
+        addLeft.setOnClickListener(controleCadeia);
+        composto.setOnClickListener(controleCadeia);
 
     }
 
