@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -252,8 +253,45 @@ public class Composto_img {
             ControleComposto cc2 = new ControleComposto("ligacao", this, lado);
             cc2.preencherSpinner(c,spinner2);
             spinner2.setOnItemSelectedListener(cc2);
+
+            Button btInserir = view.findViewById(R.id.bt_inserir);
+            btInserir.setOnClickListener(cc);
+            Button btCancelar = view.findViewById(R.id.bt_cancelar);
+            btCancelar.setOnClickListener(cc);
         }
 
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setView(view);
+        alerta = builder.create();
+        alerta.show();
+    }
+
+    public void alertComposto(String text, String lado, Composto_img composto_img) {
+        //LayoutInflater é utilizado para inflar nosso layout em uma view.
+        //-pegamos nossa instancia da classe
+        LayoutInflater li = ((CadeiaActivity) c).getLayoutInflater();
+
+        //inflamos o layout alerta.xml na view
+        View view = null;
+
+            view = li.inflate(R.layout.modelo_inf_comp_ligacao, null);
+            Spinner spinner1 = view.findViewById(R.id.spinnerComp);
+            Spinner spinner2 = view.findViewById(R.id.spinnerLig);
+            ImageView imgClose = view.findViewById(R.id.img_close);
+            ControleComposto cc = new ControleComposto("composto", this, lado);
+            cc.preencherSpinner(c,spinner1);
+            imgClose.setOnClickListener(cc);
+            ControleComposto cc2 = new ControleComposto("ligacao", this, lado);
+            cc2.preencherSpinner(c,spinner2);
+            spinner2.setOnItemSelectedListener(cc2);
+
+            ControleComposto controleComposto = new ControleComposto("",this,lado, composto_img);
+
+            Button btInserir = view.findViewById(R.id.bt_inserir);
+            btInserir.setOnClickListener(controleComposto);
+            Button btCancelar = view.findViewById(R.id.bt_cancelar);
+            btCancelar.setOnClickListener(controleComposto);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setView(view);

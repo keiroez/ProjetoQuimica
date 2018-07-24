@@ -22,31 +22,35 @@ public class ControleCadeia implements View.OnClickListener {
     public void onClick(View v) {
 
         if(v==ci.getAddDown()){
-            ci.alertComposto("ligacaoComposto", "down");
+
             Composto_img composto_img = new Composto_img(c,(int)ci.getComposto().getX(),(int)ci.getComposto().getY()+200);
-            composto_img.adicionarComposto("down");
-            adicionarMolecula(composto_img);
+            ci.alertComposto("ligacaoComposto", "down",composto_img);
+            //composto_img.adicionarComposto("down");
+            //adicionarMolecula(composto_img);
         }
 
         if(v==ci.getAddRight()){
-            ci.alertComposto("ligacaoComposto", "right");
+
             Composto_img composto_img = new Composto_img(c,(int)ci.getComposto().getX()+200,(int)ci.getComposto().getY());
-            composto_img.adicionarComposto("right");
-            adicionarMolecula(composto_img);
+            ci.alertComposto("ligacaoComposto", "right",composto_img);
+//            composto_img.adicionarComposto("right");
+//            adicionarMolecula(composto_img);
         }
 
         if(v==ci.getAddLeft()){
-            ci.alertComposto("ligacaoComposto", "left");
+
             Composto_img composto_img = new Composto_img(c,(int)ci.getComposto().getX()-200,(int)ci.getComposto().getY());
-            composto_img.adicionarComposto("left");
-            adicionarMolecula(composto_img);
+            ci.alertComposto("ligacaoComposto", "left",composto_img);
+//            composto_img.adicionarComposto("left");
+//            adicionarMolecula(composto_img);
         }
 
         if(v==ci.getAddUp()){
-            ci.alertComposto("ligacaoComposto", "up");
+
             Composto_img composto_img = new Composto_img(c,(int)ci.getComposto().getX(),(int)ci.getComposto().getY()-200);
-            composto_img.adicionarComposto("up");
-            adicionarMolecula(composto_img);
+            ci.alertComposto("ligacaoComposto", "up",composto_img);
+//            composto_img.adicionarComposto("up");
+//            adicionarMolecula(composto_img);
         }
 
         if(v==ci.getComposto()){

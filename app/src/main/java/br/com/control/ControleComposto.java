@@ -17,6 +17,7 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
     private List<String> nomes = new ArrayList<String>();
     private Composto_img ci;
     private String lado;
+    private  Composto_img composto_img;
 
     public ControleComposto(String texto, Composto_img ci, String lado) {
         if(texto.equals("composto")) {
@@ -31,9 +32,51 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
         this.lado = lado;
     }
 
+    public ControleComposto(String texto, Composto_img ci, String lado, Composto_img composto_img) {
+        if(texto.equals("composto")) {
+            nomes.add("Hidrocarboneto");
+        }
+        else if(texto.equals("ligacao")) {
+            nomes.add("simples");
+            nomes.add("dupla");
+            nomes.add("tripla");
+        }
+        this.ci = ci;
+        this.lado = lado;
+        this.composto_img = composto_img;
+    }
+
+
+
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.img_close){
+            ci.getAlerta().dismiss();
+        }
+
+        if(v.getId()==R.id.bt_inserir){
+            if(lado=="down"){
+                composto_img.adicionarComposto("down");
+               ci.getAlerta().dismiss();
+            }
+
+            if(lado=="up"){
+                composto_img.adicionarComposto("up");
+                ci.getAlerta().dismiss();
+            }
+
+            if(lado=="left"){
+                composto_img.adicionarComposto("left");
+                ci.getAlerta().dismiss();
+            }
+
+            if(lado=="right"){
+                composto_img.adicionarComposto("right");
+                ci.getAlerta().dismiss();
+            }
+        }
+
+        if(v.getId()==R.id.bt_cancelar){
             ci.getAlerta().dismiss();
         }
     }
