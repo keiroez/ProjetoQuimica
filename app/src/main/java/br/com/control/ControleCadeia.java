@@ -3,14 +3,13 @@ package br.com.control;
 import android.content.Context;
 import android.view.View;
 
-import br.com.model.Cadeia;
-import br.com.model.Molecula;
 import br.com.view.Composto_img;
 
 public class ControleCadeia implements View.OnClickListener {
 
     private Context c;
     private Composto_img ci;
+    private String ligacao;
 
     public ControleCadeia(Context c, Composto_img ci) {
         this.c = c;
@@ -75,13 +74,8 @@ public class ControleCadeia implements View.OnClickListener {
 
     }
 
-    //Adicionar molecula à cadeia
-    public void adicionarMolecula(Composto_img ci){
-        Molecula molecula = new Molecula((int)ci.getComposto().getX(),(int)ci.getComposto().getY());
-        Cadeia.getCadeia().getMoleculas().add(molecula);
 
-        for (Molecula molecula1:Cadeia.getCadeia().getMoleculas()) {
-            System.out.println(molecula1.getId()+" "+molecula1.getPosX()+" "+molecula1.getPosY());
-        }
+    public void verificarLigacao(View view){
+
     }
 }

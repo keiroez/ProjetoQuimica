@@ -3,8 +3,8 @@ package br.com.control;
 import android.content.Intent;
 import android.view.View;
 
-import br.com.model.Cadeia;
-import br.com.model.Molecula;
+import br.com.model.VO.Cadeia;
+import br.com.model.VO.Molecula;
 import br.com.quimicapp.R;
 import br.com.view.CadeiaActivity;
 import br.com.view.Composto_img;
@@ -21,6 +21,7 @@ public class ControleActivityCadeia implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()== R.id.bt_limpar){
+                    Cadeia.getCadeia().getMoleculas().clear();
                     Intent i = new Intent(context, CadeiaActivity.class);
                     context.startActivity(i);
                     context.finish();

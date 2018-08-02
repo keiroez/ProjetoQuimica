@@ -1,4 +1,4 @@
-package br.com.model;
+package br.com.model.VO;
 
 public class Molecula {
     private int id;

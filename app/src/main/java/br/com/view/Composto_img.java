@@ -97,20 +97,35 @@ public class Composto_img {
     }
 
 
-    public void adicionarComposto(String lado){
+    public void adicionarComposto(String lado, Boolean[] vizinhos){
         ((CadeiaActivity) c).relativeLayout.addView(this.getComposto());
-        if(this.composto.getY()>150 && !lado.equals("down"))
+
+        //Adicionar AddUp
+        if(this.composto.getY()>150 && !lado.equals("down") && !vizinhos[0])
             ((CadeiaActivity) c).relativeLayout.addView(this.getAddUp());
-        if(this.composto.getY()<1150 && !lado.equals("up"))
+
+        //ADicionar AddDown
+        if(this.composto.getY()<1150 && !lado.equals("up") && !vizinhos[2])
             ((CadeiaActivity) c).relativeLayout.addView(this.getAddDown());
-        if(this.composto.getX()<1750 && !lado.equals("left"))
+
+        //Adicionar addRight
+        if(this.composto.getX()<1750 && !lado.equals("left") && !vizinhos[1])
             ((CadeiaActivity) c).relativeLayout.addView(this.getAddRight());
-        if(this.getComposto().getX()>150 && !lado.equals("right"))
+
+        //adicionar addleft
+        if(this.getComposto().getX()>150 && !lado.equals("right") && !vizinhos[3])
             ((CadeiaActivity) c).relativeLayout.addView(this.getAddLeft());
+
+
         ((CadeiaActivity) c).relativeLayout.addView(this.getElemento1());
         ((CadeiaActivity) c).relativeLayout.addView(this.getElemento2());
         ((CadeiaActivity) c).relativeLayout.addView(this.getQtdElemento1());
         ((CadeiaActivity) c).relativeLayout.addView(this.getQtdElemento2());
+
+        for (Boolean b: vizinhos
+             ) {
+            System.out.println(b);
+        }
     }
 
     public void adicionarLigacao(String ligacao, String lado){
@@ -276,17 +291,23 @@ public class Composto_img {
         View view = null;
 
             view = li.inflate(R.layout.modelo_inf_comp_ligacao, null);
+
             Spinner spinner1 = view.findViewById(R.id.spinnerComp);
             Spinner spinner2 = view.findViewById(R.id.spinnerLig);
+
             ImageView imgClose = view.findViewById(R.id.img_close);
-            ControleComposto cc = new ControleComposto("composto", this, lado);
-            cc.preencherSpinner(c,spinner1);
-            imgClose.setOnClickListener(cc);
-            ControleComposto cc2 = new ControleComposto("ligacao", this, lado);
-            cc2.preencherSpinner(c,spinner2);
-            spinner2.setOnItemSelectedListener(cc2);
 
             ControleComposto controleComposto = new ControleComposto("",this,lado, composto_img);
+
+            controleComposto.preencherSpinner(c,spinner1);
+
+            imgClose.setOnClickListener(controleComposto);
+
+
+            controleComposto.preencherSpinner(c,spinner2);
+            spinner2.setOnItemSelectedListener(controleComposto);
+
+
 
             Button btInserir = view.findViewById(R.id.bt_inserir);
             btInserir.setOnClickListener(controleComposto);

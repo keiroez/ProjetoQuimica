@@ -1,4 +1,4 @@
-package br.com.model;
+package br.com.model.VO;
 
 import java.util.ArrayList;
 import java.util.List;
