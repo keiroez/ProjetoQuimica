@@ -21,6 +21,14 @@ public class ControleActivityCadeia implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if(v.getId()==R.id.bt_gerar){
+            int[] cont = Cadeia.getCadeia().gerarNomeclatura(Cadeia.getCadeia().getMoleculas().get(0),"");
+            System.out.println("Qtd C= "+cont[0]);
+            System.out.println("simples= "+cont[1]);
+            System.out.println("dupla= "+cont[2]);
+            System.out.println("tripla= "+cont[3]);
+        }
+
         if(v.getId()== R.id.bt_limpar){
             Cadeia.getCadeia().getMoleculas().clear();
             CadeiaImagens.getCadeiaImagens().getCompostosImagens().clear();

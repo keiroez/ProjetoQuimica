@@ -94,14 +94,17 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
         Cadeia.getCadeia().getMoleculas().add(molecula);
         CadeiaImagens.getCadeiaImagens().getCompostosImagens().add(compostoNovo);
 
-        for (Composto_img ci: CadeiaImagens.getCadeiaImagens().getCompostosImagens()
-             ) {
-            System.out.println(ci.getId());
-        }
-
-        for (Molecula m: Cadeia.getCadeia().getMoleculas()){
-            System.out.println(m.getId());
-        }
+//        for (Molecula m: Cadeia.getCadeia().getMoleculas()){
+//            System.out.println("ID:"+ m.getId());
+//            if(m.getLigacaoSuperior()!=null)
+//                System.out.println("Ligação up: "+m.getLigacaoSuperior().getId());
+//            if(m.getLigacaoDireita()!=null)
+//                System.out.println("Ligação right:"+m.getLigacaoDireita().getId());
+//            if(m.getLigacaoInferior()!=null)
+//                System.out.println("Ligação down: "+m.getLigacaoInferior().getId());
+//            if(m.getLigacaoEsquerda()!=null)
+//                System.out.println("Ligação Left: "+m.getLigacaoEsquerda().getId());
+//        }
     }
 
     public Molecula buscarMolecula(){
