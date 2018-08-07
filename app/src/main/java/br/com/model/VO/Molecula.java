@@ -2,10 +2,10 @@ package br.com.model.VO;
 
 public class Molecula {
     private int id;
-    private int ligacaoDireita;
-    private int ligacaoEsquerda;
-    private int ligacaoSuperior;
-    private int ligacaoInferior;
+    private Molecula ligacaoDireita = null;
+    private Molecula ligacaoEsquerda = null;
+    private Molecula ligacaoSuperior = null;
+    private Molecula ligacaoInferior = null;
     private String tipoLigLeft, tipoLigRight,tipoLigUp, tipoLigDown;
     private int posX;
     private int posY;
@@ -18,6 +18,10 @@ public class Molecula {
         contador++;
     }
 
+    public static void zerarContador(){
+        contador = 1;
+    }
+
     public int getId() {
         return id;
     }
@@ -26,35 +30,35 @@ public class Molecula {
         this.id = id;
     }
 
-    public int getLigacaoDireita() {
+    public Molecula getLigacaoDireita() {
         return ligacaoDireita;
     }
 
-    public void setLigacaoDireita(int ligacaoDireita) {
+    public void setLigacaoDireita(Molecula ligacaoDireita) {
         this.ligacaoDireita = ligacaoDireita;
     }
 
-    public int getLigacaoEsquerda() {
+    public Molecula getLigacaoEsquerda() {
         return ligacaoEsquerda;
     }
 
-    public void setLigacaoEsquerda(int ligacaoEsquerda) {
+    public void setLigacaoEsquerda(Molecula ligacaoEsquerda) {
         this.ligacaoEsquerda = ligacaoEsquerda;
     }
 
-    public int getLigacaoSuperior() {
+    public Molecula getLigacaoSuperior() {
         return ligacaoSuperior;
     }
 
-    public void setLigacaoSuperior(int ligacaoSuperior) {
+    public void setLigacaoSuperior(Molecula ligacaoSuperior) {
         this.ligacaoSuperior = ligacaoSuperior;
     }
 
-    public int getLigacaoInferior() {
+    public Molecula getLigacaoInferior() {
         return ligacaoInferior;
     }
 
-    public void setLigacaoInferior(int ligacaoInferior) {
+    public void setLigacaoInferior(Molecula ligacaoInferior) {
         this.ligacaoInferior = ligacaoInferior;
     }
 

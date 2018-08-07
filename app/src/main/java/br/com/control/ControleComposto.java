@@ -12,30 +12,31 @@ import java.util.List;
 import br.com.model.VO.Cadeia;
 import br.com.model.VO.Molecula;
 import br.com.quimicapp.R;
+import br.com.view.CadeiaImagens;
 import br.com.view.Composto_img;
 
 
 public class ControleComposto implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private List<String> nomesLigacao = new ArrayList<String>();
     private List<String> nomesCompostos = new ArrayList<String>();
-    private Composto_img ci;
+    private Composto_img existenteCompostoImg;
     private String lado;
-    private  Composto_img composto_img;
+    private  Composto_img NovoCompostoImg;
     private boolean adicao = false;
     private String ligacao;
 
-    public ControleComposto(String texto, Composto_img ci, String lado) {
+    public ControleComposto(String texto, Composto_img ciExistente, String lado) {
 
             nomesCompostos.add("Hidrocarboneto");
             nomesLigacao.add("simples");
             nomesLigacao.add("dupla");
             nomesLigacao.add("tripla");
 
-        this.ci = ci;
+        this.existenteCompostoImg = ciExistente;
         this.lado = lado;
     }
 
-    public ControleComposto(String texto, Composto_img ci, String lado, Composto_img composto_img) {
+    public ControleComposto(String texto, Composto_img ciExistente, String lado, Composto_img ciNovo) {
 
             nomesCompostos.add("Hidrocarboneto");
 
@@ -43,91 +44,161 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
             nomesLigacao.add("dupla");
             nomesLigacao.add("tripla");
 
-        this.ci = ci;
+        this.existenteCompostoImg = ciExistente;
         this.lado = lado;
-        this.composto_img = composto_img;
+        this.NovoCompostoImg = ciNovo;
         adicao = true;
         ligacao = "simples";
     }
 
-    //Adicionar molecula à cadeia
-    public void adicionarMolecula(Composto_img composto){
-        Molecula molecula = new Molecula((int)composto.getComposto().getX(),(int)composto.getComposto().getY());
-        Cadeia.getCadeia().getMoleculas().add(molecula);
+    //Adicionar molecula as listas de compostos
+    public void adicionarListas(Composto_img compostoNovo){
+        Molecula molecula = new Molecula((int)compostoNovo.getComposto().getX(),(int)compostoNovo.getComposto().getY());
 
-        for (Molecula molecula1:Cadeia.getCadeia().getMoleculas()) {
-            System.out.println(molecula1.getId()+" "+molecula1.getPosX()+" "+molecula1.getPosY());
+        Molecula moleculaCriadora = buscarMolecula();
+
+
+        //Adicionar ligaçao
+        if(lado.equals("up")){
+            molecula.setLigacaoInferior(moleculaCriadora);
+            molecula.setTipoLigDown(ligacao);
+
+            moleculaCriadora.setLigacaoSuperior(molecula);
+            molecula.setTipoLigUp(ligacao);
+        }
+
+        if(lado.equals("right")){
+            molecula.setLigacaoEsquerda(moleculaCriadora);
+            molecula.setTipoLigLeft(ligacao);
+
+            moleculaCriadora.setLigacaoDireita(molecula);
+            molecula.setTipoLigRight(ligacao);
+        }
+
+        if(lado.equals("down")){
+            molecula.setLigacaoSuperior(moleculaCriadora);
+            molecula.setTipoLigUp(ligacao);
+
+            moleculaCriadora.setLigacaoInferior(molecula);
+            molecula.setTipoLigDown(ligacao);
+        }
+
+        if(lado.equals("left")){
+            molecula.setLigacaoDireita(moleculaCriadora);
+            molecula.setTipoLigRight(ligacao);
+
+            moleculaCriadora.setLigacaoEsquerda(molecula);
+            molecula.setTipoLigLeft(ligacao);
+        }
+
+        Cadeia.getCadeia().getMoleculas().add(molecula);
+        CadeiaImagens.getCadeiaImagens().getCompostosImagens().add(compostoNovo);
+
+        for (Composto_img ci: CadeiaImagens.getCadeiaImagens().getCompostosImagens()
+             ) {
+            System.out.println(ci.getId());
+        }
+
+        for (Molecula m: Cadeia.getCadeia().getMoleculas()){
+            System.out.println(m.getId());
         }
     }
 
+    public Molecula buscarMolecula(){
+        Molecula molecula = null;
+
+        for (Molecula m: Cadeia.getCadeia().getMoleculas()
+             ) {
+            if(m.getId()==existenteCompostoImg.getId()){
+                molecula = m;
+            }
+        }
+        return molecula;
+    }
+
     //Verificar se há molecula ao lado sem ligacao
-    public Boolean[] verificarVizinho(Composto_img cpi){
-        Boolean[] vizinhos = new Boolean[4];
-        vizinhos[0] = false;
-        vizinhos[1] = false;
-        vizinhos[2] = false;
-        vizinhos[3] = false;
+    public Verificador[] verificarVizinho(Composto_img cpi){
+        Verificador[] verificador = new Verificador[4];
+
+        verificador[0] = new Verificador();
+        verificador[1] = new Verificador();
+        verificador[2] = new Verificador();
+        verificador[3] = new Verificador();
+
+        verificador[0].vizinho = false;
+        verificador[1].vizinho = false;
+        verificador[2].vizinho = false;
+        verificador[3].vizinho = false;
+
         for (Molecula m: Cadeia.getCadeia().getMoleculas()){
             //Up
             if(cpi.getComposto().getY()-200==m.getPosY() && cpi.getComposto().getX()==m.getPosX()){
-                vizinhos[0] = true;
+                verificador[0].vizinho = true;
+                verificador[0].posXvizinho = m.getPosX();
+                verificador[0].posYvizinho = m.getPosY();
             }
             //Right
             else if (cpi.getComposto().getX() + 200 == m.getPosX() && cpi.getComposto().getY()==m.getPosY()) {
-                vizinhos[1] = true;
+                verificador[1].vizinho = true;
+                verificador[1].posXvizinho = m.getPosX();
+                verificador[1].posYvizinho = m.getPosY();
             }
 
             //Down
             else if (cpi.getComposto().getY() + 200 == m.getPosY() && cpi.getComposto().getX()==m.getPosX()) {
-                vizinhos[2] = true;
+                verificador[2].vizinho = true;
+                verificador[2].posXvizinho = m.getPosX();
+                verificador[2].posYvizinho = m.getPosY();
             }
 
             //Left
             else if (cpi.getComposto().getX() - 200 == m.getPosX() && cpi.getComposto().getY()==m.getPosY()) {
-                vizinhos[3] = true;
+                verificador[3].vizinho = true;
+                verificador[3].posXvizinho = m.getPosX();
+                verificador[3].posYvizinho = m.getPosY();
             }
         }
-        return vizinhos;
+        return verificador;
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.img_close){
-            ci.getAlerta().dismiss();
+            existenteCompostoImg.getAlerta().dismiss();
         }
 
         if(v.getId()==R.id.bt_inserir){
             if(lado=="down"){
-                composto_img.adicionarComposto("down",verificarVizinho(composto_img));
-                ci.adicionarLigacao(ligacao,lado);
-                adicionarMolecula(composto_img);
-               ci.getAlerta().dismiss();
+                NovoCompostoImg.adicionarComposto("down",verificarVizinho(NovoCompostoImg));
+                existenteCompostoImg.adicionarLigacao(ligacao,lado);
+                adicionarListas(NovoCompostoImg);
+               existenteCompostoImg.getAlerta().dismiss();
             }
 
             if(lado=="up"){
-                composto_img.adicionarComposto("up",verificarVizinho(composto_img));
-                ci.adicionarLigacao(ligacao,lado);
-                adicionarMolecula(composto_img);
-                ci.getAlerta().dismiss();
+                NovoCompostoImg.adicionarComposto("up",verificarVizinho(NovoCompostoImg));
+                existenteCompostoImg.adicionarLigacao(ligacao,lado);
+                adicionarListas(NovoCompostoImg);
+                existenteCompostoImg.getAlerta().dismiss();
             }
 
             if(lado=="left"){
-                composto_img.adicionarComposto("left",verificarVizinho(composto_img));
-                ci.adicionarLigacao(ligacao,lado);
-                adicionarMolecula(composto_img);
-                ci.getAlerta().dismiss();
+                NovoCompostoImg.adicionarComposto("left",verificarVizinho(NovoCompostoImg));
+                existenteCompostoImg.adicionarLigacao(ligacao,lado);
+                adicionarListas(NovoCompostoImg);
+                existenteCompostoImg.getAlerta().dismiss();
             }
 
             if(lado=="right"){
-                composto_img.adicionarComposto("right", verificarVizinho(composto_img));
-                ci.adicionarLigacao(ligacao,lado);
-                adicionarMolecula(composto_img);
-                ci.getAlerta().dismiss();
+                NovoCompostoImg.adicionarComposto("right", verificarVizinho(NovoCompostoImg));
+                existenteCompostoImg.adicionarLigacao(ligacao,lado);
+                adicionarListas(NovoCompostoImg);
+                existenteCompostoImg.getAlerta().dismiss();
             }
         }
 
         if(v.getId()==R.id.bt_cancelar){
-            ci.getAlerta().dismiss();
+            existenteCompostoImg.getAlerta().dismiss();
         }
     }
 
@@ -136,11 +207,11 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
 
         if(parent.getId()==R.id.spinnerLigacao) {
                 if (parent.getItemAtPosition(position).toString().equals("simples")) {
-                    ci.adicionarLigacao("simples", lado);
+                    existenteCompostoImg.adicionarLigacao("simples", lado);
                 } else if (parent.getItemAtPosition(position).toString().equals("dupla")) {
-                    ci.adicionarLigacao("dupla", lado);
+                    existenteCompostoImg.adicionarLigacao("dupla", lado);
                 } else if (parent.getItemAtPosition(position).toString().equals("tripla")) {
-                    ci.adicionarLigacao("tripla", lado);
+                    existenteCompostoImg.adicionarLigacao("tripla", lado);
                 }
         }
         if(parent.getId()== R.id.spinnerLig){
@@ -191,5 +262,17 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
 
             }
         });
+    }
+
+
+    //Verificador de vizinhos
+    public class Verificador{
+        public Boolean vizinho = false;
+        public int posXvizinho;
+        public int posYvizinho;
+
+        public Verificador() {
+            this.vizinho = false;
+        }
     }
 }

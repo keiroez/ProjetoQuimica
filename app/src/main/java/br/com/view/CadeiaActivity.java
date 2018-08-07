@@ -27,19 +27,21 @@ public class CadeiaActivity extends AppCompatActivity {
         btGerar = findViewById(R.id.bt_gerar);
         btLimpar = findViewById(R.id.bt_limpar);
 
-        Composto_img ci = new Composto_img(this, 150, 700);
+        Composto_img ciNovo = new Composto_img(this, 150, 700);
+        ciNovo.setId(Composto_img.getContador());
+        Composto_img.setContador();
+        CadeiaImagens.getCadeiaImagens().getCompostosImagens().add(ciNovo);
 
-        relativeLayout.addView(ci.getComposto());
-        relativeLayout.addView(ci.getAddRight());
-        relativeLayout.addView(ci.getAddDown());
-        relativeLayout.addView(ci.getAddUp());
-        relativeLayout.addView(ci.getElemento1());
-        relativeLayout.addView(ci.getElemento2());
-        relativeLayout.addView(ci.getQtdElemento1());
-        relativeLayout.addView(ci.getQtdElemento2());
+        relativeLayout.addView(ciNovo.getComposto());
+        relativeLayout.addView(ciNovo.getAddRight());
+        relativeLayout.addView(ciNovo.getAddDown());
+        relativeLayout.addView(ciNovo.getAddUp());
+        relativeLayout.addView(ciNovo.getElemento1());
+        relativeLayout.addView(ciNovo.getElemento2());
+        relativeLayout.addView(ciNovo.getQtdElemento1());
+        relativeLayout.addView(ciNovo.getQtdElemento2());
 
-
-        btLimpar.setOnClickListener(new ControleActivityCadeia(this, ci));
+        btLimpar.setOnClickListener(new ControleActivityCadeia(this, ciNovo));
 
         zoomLayout.setVisibility(View.VISIBLE);
     }

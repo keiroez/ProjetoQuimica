@@ -16,12 +16,16 @@ import br.com.quimicapp.R;
 
 public class Composto_img {
 
+    private int id;
+    private static int contador = 1;
+
     private TextView elemento1, elemento2, qtdElemento1, qtdElemento2;
     private ImageView composto, addLeft, addRight, addUp, addDown, ligacaoLeft, ligacaoRight, ligacaoUp, ligacaoDown;
     private Context c;
     private AlertDialog alerta;
 
     public Composto_img(Context context, int x, int y) {
+
         c = context;
         composto = new ImageView(context);
         addRight = new ImageView(context);
@@ -96,24 +100,28 @@ public class Composto_img {
 
     }
 
+    public static void zerarContador(){
+        contador = 1;
+    }
 
-    public void adicionarComposto(String lado, Boolean[] vizinhos){
+
+    public void adicionarComposto(String lado, ControleComposto.Verificador[] verificador){
         ((CadeiaActivity) c).relativeLayout.addView(this.getComposto());
 
         //Adicionar AddUp
-        if(this.composto.getY()>150 && !lado.equals("down") && !vizinhos[0])
+        if(this.composto.getY()>150 && !lado.equals("down") && !verificador[0].vizinho )
             ((CadeiaActivity) c).relativeLayout.addView(this.getAddUp());
 
         //ADicionar AddDown
-        if(this.composto.getY()<1150 && !lado.equals("up") && !vizinhos[2])
+        if(this.composto.getY()<1150 && !lado.equals("up") && !verificador[2].vizinho)
             ((CadeiaActivity) c).relativeLayout.addView(this.getAddDown());
 
         //Adicionar addRight
-        if(this.composto.getX()<1750 && !lado.equals("left") && !vizinhos[1])
+        if(this.composto.getX()<1750 && !lado.equals("left") && !verificador[1].vizinho)
             ((CadeiaActivity) c).relativeLayout.addView(this.getAddRight());
 
         //adicionar addleft
-        if(this.getComposto().getX()>150 && !lado.equals("right") && !vizinhos[3])
+        if(this.getComposto().getX()>150 && !lado.equals("right") && !verificador[3].vizinho)
             ((CadeiaActivity) c).relativeLayout.addView(this.getAddLeft());
 
 
@@ -122,10 +130,32 @@ public class Composto_img {
         ((CadeiaActivity) c).relativeLayout.addView(this.getQtdElemento1());
         ((CadeiaActivity) c).relativeLayout.addView(this.getQtdElemento2());
 
-        for (Boolean b: vizinhos
-             ) {
-            System.out.println(b);
+        //Adicionando id
+        this.id = contador;
+        contador++;
+
+
+        //Retirar add dos vizinhos ja existentes
+        for (Composto_img composto: CadeiaImagens.getCadeiaImagens().getCompostosImagens()){
+            for(int i = 0; i<4;i++){
+                if(verificador[i].vizinho && verificador[i].posXvizinho==composto.getComposto().getX() &&
+                        verificador[i].posYvizinho==composto.getComposto().getY()){
+                    if(i==0){
+                        ((CadeiaActivity) c).relativeLayout.removeView(composto.addDown);
+                    }
+                    if(i==1){
+                        ((CadeiaActivity) c).relativeLayout.removeView(composto.addLeft);
+                    }
+                    if(i==2){
+                        ((CadeiaActivity) c).relativeLayout.removeView(composto.addUp);
+                    }
+                    if(i==3){
+                        ((CadeiaActivity) c).relativeLayout.removeView(composto.addRight);
+                    }
+                }
+            }
         }
+
     }
 
     public void adicionarLigacao(String ligacao, String lado){
@@ -282,7 +312,9 @@ public class Composto_img {
         alerta.show();
     }
 
-    public void alertComposto(String text, String lado, Composto_img composto_img) {
+
+    //Alerta para adição de novo elemento
+    public void alertComposto(String text, String lado, Composto_img composto_imgNovo) {
         //LayoutInflater é utilizado para inflar nosso layout em uma view.
         //-pegamos nossa instancia da classe
         LayoutInflater li = ((CadeiaActivity) c).getLayoutInflater();
@@ -297,7 +329,7 @@ public class Composto_img {
 
             ImageView imgClose = view.findViewById(R.id.img_close);
 
-            ControleComposto controleComposto = new ControleComposto("",this,lado, composto_img);
+            ControleComposto controleComposto = new ControleComposto("",this,lado, composto_imgNovo);
 
             controleComposto.preencherSpinner(c,spinner1);
 
@@ -438,5 +470,20 @@ public class Composto_img {
 
     public void setAlerta(AlertDialog alerta) {
         this.alerta = alerta;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public static int getContador() {
+        return contador;
+    }
+    public static void setContador(){
+        contador++;
     }
 }
