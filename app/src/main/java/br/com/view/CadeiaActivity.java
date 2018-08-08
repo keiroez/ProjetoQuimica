@@ -41,7 +41,12 @@ public class CadeiaActivity extends AppCompatActivity {
         relativeLayout.addView(ciNovo.getQtdElemento1());
         relativeLayout.addView(ciNovo.getQtdElemento2());
 
-        ControleActivityCadeia controle = new ControleActivityCadeia(this, ciNovo);
+        ControleActivityCadeia controle = null;
+        try {
+            controle = new ControleActivityCadeia(this, ciNovo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         btLimpar.setOnClickListener(controle);
         btGerar.setOnClickListener(controle);
 
