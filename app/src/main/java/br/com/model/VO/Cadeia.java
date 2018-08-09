@@ -5,15 +5,14 @@ import java.util.List;
 
 public class Cadeia extends CadeiaGeradora {
     private List<Molecula> moleculas;
+    private static Cadeia cadeia = new Cadeia();
 
-    private Cadeia(){
+    public Cadeia(){
         moleculas = new ArrayList<>();
     }
-    private static Cadeia cadeia = null;
 
-    public static synchronized Cadeia getCadeia(){
-        if(cadeia==null)
-            cadeia = new Cadeia();
+
+    public static Cadeia getCadeia(){
         return cadeia;
     }
 

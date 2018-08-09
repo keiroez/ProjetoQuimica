@@ -2,7 +2,7 @@ package br.com.model.VO;
 
 import java.util.ArrayList;
 
-public class DadosUIPAC {
+public class DadosIUPAC {
     private ArrayList<Prefixo> prefixos = new ArrayList<>();
     private ArrayList<Sufixo> sufixos = new ArrayList<>();
     private ArrayList<Infixo> infixos = new ArrayList<>();

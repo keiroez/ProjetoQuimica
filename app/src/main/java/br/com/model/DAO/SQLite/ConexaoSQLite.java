@@ -8,7 +8,7 @@ public class ConexaoSQLite extends SQLiteOpenHelper {
     private static SQLiteDatabase database;
 
     private ConexaoSQLite(Context context) {
-        super(context, "banco_quimicapp",null,1);
+        super(context, "bd_quimicapp_v1_0_0_1",null,1);
     }
 
     @Override
@@ -23,25 +23,32 @@ public class ConexaoSQLite extends SQLiteOpenHelper {
         StringBuilder queryInfixo = new StringBuilder();
         queryInfixo.append("create table infixo (" );
         queryInfixo.append("id integer primary key, ");
-        queryPrefixo.append("qtd integer, ");
-        queryPrefixo.append("qtdnome varchar(20), ");
+        queryInfixo.append("qtd integer, ");
+        queryInfixo.append("qtdnome varchar(20), ");
         queryInfixo.append("nome varchar(20) );");
         db.execSQL(queryInfixo.toString());
 
         StringBuilder querySufixo = new StringBuilder();
         querySufixo.append("create table sufixo (" );
         querySufixo.append("id integer primary key, ");
-        querySufixo.append("nome varchar(20) );");
+        querySufixo.append("nome varchar(20),");
+        querySufixo.append("grupo varchar(20) );");
         db.execSQL(querySufixo.toString());
+
+        System.out.println("criou bd");
     }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        String sql = "DROP TABLE IF EXISTS infixo";
-//        db.execSQL(sql);
+//        db.execSQL("DROP TABLE IF EXISTS prefixo");
+//        db.execSQL("DROP TABLE IF EXISTS infixo");
+//        db.execSQL("DROP TABLE IF EXISTS sufixo");
 //        onCreate(db);
     }
 
+    //SINGLETON
     public static synchronized SQLiteDatabase getConexaoSQLite(Context context){
         if(database==null || !database.isOpen()){
             ConexaoSQLite conn = new ConexaoSQLite(context);

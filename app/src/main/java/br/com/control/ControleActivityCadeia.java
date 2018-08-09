@@ -5,12 +5,14 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import br.com.model.DAO.fabricaDAO.FabricaDAOSQLite;
+import br.com.model.DAO.Fachada;
 import br.com.model.VO.Cadeia;
-import br.com.model.VO.DadosUIPAC;
+import br.com.model.VO.CadeiaAdapter;
+import br.com.model.VO.DadosIUPAC;
 import br.com.model.VO.Infixo;
 import br.com.model.VO.Molecula;
 import br.com.model.VO.Prefixo;
+import br.com.model.VO.Sufixo;
 import br.com.quimicapp.R;
 import br.com.view.CadeiaActivity;
 import br.com.view.CadeiaImagens;
@@ -18,31 +20,24 @@ import br.com.view.Composto_img;
 
 public class ControleActivityCadeia implements View.OnClickListener {
     private CadeiaActivity context;
-    private DadosUIPAC dadosUIPAC;
+    private DadosIUPAC dadosIUPAC;
 
     public ControleActivityCadeia(CadeiaActivity context, Composto_img composto_img) throws Exception {
         this.context = context;
         Molecula molecula = new Molecula((int)composto_img.getComposto().getX(),(int)composto_img.getComposto().getY());
         Cadeia.getCadeia().getMoleculas().add(molecula);
 
-        dadosUIPAC = new DadosUIPAC();
+        dadosIUPAC = new DadosIUPAC();
         String[] dados = preencherDadosPrefixos();
 
         for(int i=0; i<69;i++){
-            dadosUIPAC.getPrefixos().add(new Prefixo(i, dados[i]));
+            dadosIUPAC.getPrefixos().add(new Prefixo(i+1, dados[i]));
         }
+        dadosIUPAC.setInfixos(preencherDadosInfixos());
+        dadosIUPAC.setSufixos(preencherDadosSufixos());
 
-        dadosUIPAC.setInfixos(preencherDadosInfixos());
-
-
-        FabricaDAOSQLite fabricaDAOSQLite =  new FabricaDAOSQLite();
-        if(fabricaDAOSQLite.createDADOSIUPACdao(context).selectDados()==null)
-            fabricaDAOSQLite.createDADOSIUPACdao(context).insertDados(dadosUIPAC);
-
-//        for (Infixo p: fabricaDAOSQLite.createDADOSIUPACdao(context).selectDados().getInfixos()
-//             ) {
-//            System.out.println(p.getNome());
-//        }
+        //Inserir dados IUPAC(Prefixos, infixos e sufixos)
+        Fachada.inserirDadosIUPAC(dadosIUPAC,context);
 
     }
 
@@ -56,6 +51,15 @@ public class ControleActivityCadeia implements View.OnClickListener {
             System.out.println("simples= "+cont[1]);
             System.out.println("dupla= "+cont[2]);
             System.out.println("tripla= "+cont[3]);
+            String nome = "Erro";
+            try {
+                nome = CadeiaAdapter.transformarString(
+                        Cadeia.getCadeia().gerarNomeclatura(Cadeia.getCadeia().getMoleculas().get(0), ""), context);
+                System.out.println(nome);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            context.alertNomenclatura(nome);
         }
 
         if(v.getId()== R.id.bt_limpar){
@@ -69,44 +73,59 @@ public class ControleActivityCadeia implements View.OnClickListener {
             context.startActivity(i);
             context.finish();
         }
+
+        if(v.getId()==R.id.img_close || v.getId()==R.id.bt_ok){
+            context.getAlerta().dismiss();
+        }
+    }
+
+    public ArrayList<Sufixo> preencherDadosSufixos(){
+        ArrayList<Sufixo> sufixos = new ArrayList<>();
+
+        sufixos.add(new Sufixo("hidrocarboneto", "o"));
+        sufixos.add(new Sufixo("alcool", "ol"));
+        sufixos.add(new Sufixo("aldeido", "al"));
+        sufixos.add(new Sufixo("cetona", "ona"));
+        sufixos.add(new Sufixo("ácido carboxilico", "óico"));
+        return sufixos;
     }
 
     public ArrayList<Infixo> preencherDadosInfixos(){
         ArrayList<Infixo> infixos =  new ArrayList();
 
-        infixos.add(new Infixo(1,"mono","an"));
-        infixos.add(new Infixo(1,"mono","en"));
-        infixos.add(new Infixo(1,"mono","in"));
+        infixos.add(new Infixo(1,"","an"));
+        infixos.add(new Infixo(1,"","en"));
+        infixos.add(new Infixo(1,"","in"));
 
-        infixos.add(new Infixo(2,"di","an"));
+        infixos.add(new Infixo(2,"","an"));
         infixos.add(new Infixo(2,"di","en"));
         infixos.add(new Infixo(2,"di","in"));
 
-        infixos.add(new Infixo(3,"tri","an"));
+        infixos.add(new Infixo(3,"","an"));
         infixos.add(new Infixo(3,"tri","en"));
         infixos.add(new Infixo(3,"tri","in"));
 
-        infixos.add(new Infixo(4,"tetra","an"));
+        infixos.add(new Infixo(4,"","an"));
         infixos.add(new Infixo(4,"tetra","en"));
         infixos.add(new Infixo(4,"tetra","in"));
 
-        infixos.add(new Infixo(5,"penta","an"));
+        infixos.add(new Infixo(5,"","an"));
         infixos.add(new Infixo(5,"penta","en"));
         infixos.add(new Infixo(5,"penta","in"));
 
-        infixos.add(new Infixo(6,"hexa","an"));
+        infixos.add(new Infixo(6,"","an"));
         infixos.add(new Infixo(6,"hexa","en"));
         infixos.add(new Infixo(6,"hexa","in"));
 
-        infixos.add(new Infixo(7,"hepta","an"));
+        infixos.add(new Infixo(7,"","an"));
         infixos.add(new Infixo(7,"hepta","en"));
         infixos.add(new Infixo(7,"hepta","in"));
 
-        infixos.add(new Infixo(8,"octa","an"));
+        infixos.add(new Infixo(8,"","an"));
         infixos.add(new Infixo(8,"octa","en"));
         infixos.add(new Infixo(8,"octa","in"));
 
-        infixos.add(new Infixo(9,"nona","an"));
+        infixos.add(new Infixo(9,"","an"));
         infixos.add(new Infixo(9,"nona","en"));
         infixos.add(new Infixo(9,"nona","in"));
 

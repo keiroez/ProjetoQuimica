@@ -352,6 +352,7 @@ public class Composto_img {
         alerta.show();
     }
 
+
     public TextView getElemento1() {
         return elemento1;
     }

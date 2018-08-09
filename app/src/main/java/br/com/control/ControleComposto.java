@@ -57,6 +57,10 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
 
         Molecula moleculaCriadora = buscarMolecula();
 
+        moleculaCriadora.setRamificacao(moleculaCriadora.getRamificacao()+1);
+        molecula.setRamificacao(molecula.getRamificacao()+1);
+
+        System.out.println("Ramificação= "+moleculaCriadora.getRamificacao());
 
         //Adicionar ligaçao
         if(lado.equals("up")){

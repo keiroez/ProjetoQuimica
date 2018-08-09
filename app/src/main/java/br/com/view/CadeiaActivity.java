@@ -1,10 +1,14 @@
 package br.com.view;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import br.com.control.ControleActivityCadeia;
 import br.com.quimicapp.R;
@@ -14,6 +18,8 @@ import libs.ZoomLogger;
 public class CadeiaActivity extends AppCompatActivity {
     public RelativeLayout relativeLayout;
     public Button btGerar, btLimpar;
+    private AlertDialog alerta;
+    private ControleActivityCadeia controle = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +47,7 @@ public class CadeiaActivity extends AppCompatActivity {
         relativeLayout.addView(ciNovo.getQtdElemento1());
         relativeLayout.addView(ciNovo.getQtdElemento2());
 
-        ControleActivityCadeia controle = null;
+
         try {
             controle = new ControleActivityCadeia(this, ciNovo);
         } catch (Exception e) {
@@ -53,11 +59,45 @@ public class CadeiaActivity extends AppCompatActivity {
         zoomLayout.setVisibility(View.VISIBLE);
     }
 
+
+    public void alertNomenclatura(String nome) {
+        //LayoutInflater é utilizado para inflar nosso layout em uma view.
+        //-pegamos nossa instancia da classe
+        LayoutInflater li = (this).getLayoutInflater();
+
+        //inflamos o layout alerta.xml na view
+        View view = null;
+
+        view = li.inflate(R.layout.modelo_inf_nomenclatura, null);
+        TextView tvNomenclatura = view.findViewById(R.id.tv_nomenclatura);
+        ImageView imgClose = view.findViewById(R.id.img_close);
+        Button btOk = view.findViewById(R.id.bt_ok);
+
+        imgClose.setOnClickListener(controle);
+        btOk.setOnClickListener(controle);
+        tvNomenclatura.setText(nome);
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        alerta = builder.create();
+        alerta.show();
+    }
+
+
     public RelativeLayout getRelativeLayout() {
         return relativeLayout;
     }
 
     public void setRelativeLayout(RelativeLayout relativeLayout) {
         this.relativeLayout = relativeLayout;
+    }
+
+    public AlertDialog getAlerta() {
+        return alerta;
+    }
+
+    public void setAlerta(AlertDialog alerta) {
+        this.alerta = alerta;
     }
 }

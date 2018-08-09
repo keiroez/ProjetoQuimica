@@ -11,6 +11,8 @@ public class Molecula {
     private int posY;
     private static int contador = 1;
 
+    private int ramificacao= 0;
+
     public Molecula(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
@@ -108,5 +110,13 @@ public class Molecula {
 
     public void setTipoLigDown(String tipoLigDown) {
         this.tipoLigDown = tipoLigDown;
+    }
+
+    public int getRamificacao() {
+        return ramificacao;
+    }
+
+    public void setRamificacao(int ramificacao) {
+        this.ramificacao = ramificacao;
     }
 }
