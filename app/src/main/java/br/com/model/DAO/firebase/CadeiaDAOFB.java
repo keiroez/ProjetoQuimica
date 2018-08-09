@@ -9,17 +9,17 @@ public class CadeiaDAOFB extends CadeiaDAO {
 
 
     @Override
-    public void insertDados(Cadeia cadeia) {
+    public void insertDados(Cadeia cadeia) throws Exception{
 
     }
 
     @Override
-    public List<Cadeia> listarCadeias() {
+    public List<Cadeia> listarCadeias()throws Exception {
         return null;
     }
 
     @Override
-    public Cadeia cadeiaById(int id) {
+    public Cadeia cadeiaById(int id)throws Exception {
         return null;
     }
 }

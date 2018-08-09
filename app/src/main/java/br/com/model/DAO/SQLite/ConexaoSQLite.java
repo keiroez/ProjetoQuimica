@@ -8,7 +8,7 @@ public class ConexaoSQLite extends SQLiteOpenHelper {
     private static SQLiteDatabase database;
 
     private ConexaoSQLite(Context context) {
-        super(context, "bd_quimicapp_v1_0_0_1",null,1);
+        super(context, "bd_quimicapp_v1_0_0_2",null,1);
     }
 
     @Override
@@ -34,6 +34,23 @@ public class ConexaoSQLite extends SQLiteOpenHelper {
         querySufixo.append("nome varchar(20),");
         querySufixo.append("grupo varchar(20) );");
         db.execSQL(querySufixo.toString());
+
+        StringBuilder queryCadeia = new StringBuilder();
+        queryCadeia.append("create table cadeia (" );
+        queryCadeia.append("id integer primary key, ");
+        queryCadeia.append("nome varchar(100));");
+        db.execSQL(queryCadeia.toString());
+
+        StringBuilder queryMolecula = new StringBuilder();
+        queryMolecula.append("create table molecula (" );
+        queryMolecula.append("id integer primary key, ");
+        queryMolecula.append("posX int,");
+        queryMolecula.append("posY int,");
+        queryMolecula.append("id_cadeia int,");
+        queryMolecula.append("FOREIGN KEY(id_cadeia) REFERENCES cadeia(id));");
+        db.execSQL(queryMolecula.toString());
+
+
 
         System.out.println("criou bd");
     }

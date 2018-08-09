@@ -1,24 +1,30 @@
 package br.com.model.VO;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.model.DAO.Fachada;
+
 public class Cadeia extends CadeiaGeradora {
     private List<Molecula> moleculas;
-    private static Cadeia cadeia = new Cadeia();
+    private String nome;
+    private int id = -1;
+    private Context context = null;
+
+   // private static Cadeia cadeia = new Cadeia();
 
     public Cadeia(){
         moleculas = new ArrayList<>();
     }
 
 
-    public static Cadeia getCadeia(){
-        return cadeia;
-    }
+//    public static Cadeia getCadeia(){
+//        return cadeia;
+//    }
 
-    public List<Molecula> getMoleculas() {
-                return moleculas;
-    }
+
 
     public int [] verificarLigacoes(String anterior, Molecula molecula){
         int[] contadorLigacao = new int[4];
@@ -64,5 +70,45 @@ public class Cadeia extends CadeiaGeradora {
         }
 
             return contadorLigacao;
+    }
+
+    //Lazy load
+    public List<Molecula> getMoleculas() throws Exception {
+        if(this.id==-1)
+            return moleculas;
+        else
+            return Fachada.listarMoleculas(this,context);
+    }
+
+//    public List<Molecula> getMoleculas() {
+//            return moleculas;
+//    }
+
+    public void setMoleculas(List<Molecula> moleculas) {
+            this.moleculas = moleculas;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

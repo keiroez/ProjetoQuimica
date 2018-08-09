@@ -2,9 +2,13 @@ package br.com.model.DAO;
 
 import android.content.Context;
 
+import java.util.List;
+
 import br.com.model.DAO.SQLite.FabricaDAOSQLite;
 import br.com.model.DAO.fabricaDAO.FabricaDAOs;
+import br.com.model.VO.Cadeia;
 import br.com.model.VO.DadosIUPAC;
+import br.com.model.VO.Molecula;
 
 public class Fachada {
     public static final FabricaDAOs fabricaDAO = new FabricaDAOSQLite();
@@ -50,7 +54,21 @@ public class Fachada {
 
     public static String  buscarSufixoGrupo(String grupo, Context context) throws Exception {
         String sufixo = fabricaDAO.createSufixoDAO(context).buscarSufixoQtd(grupo);
-
         return sufixo;
+    }
+
+    public static void inserirCadeia(Cadeia cadeia, Context context)throws Exception{
+        fabricaDAO.createCadeiaDAO(context).insertDados(cadeia);
+        fabricaDAO.createMoleculaDAO(context).inserirMoleculas(cadeia);
+    }
+
+    public static List<Cadeia> listarCadeias(Context context)throws Exception{
+        List<Cadeia> cadeias = fabricaDAO.createCadeiaDAO(context).listarCadeias();
+        return cadeias;
+    }
+
+    public static List<Molecula> listarMoleculas(Cadeia cadeia, Context context)throws Exception{
+        List<Molecula> moleculas = fabricaDAO.createMoleculaDAO(context).listaDeMoleculas(cadeia.getId());
+        return moleculas;
     }
 }

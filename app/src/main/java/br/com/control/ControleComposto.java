@@ -9,7 +9,6 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.model.VO.Cadeia;
 import br.com.model.VO.Molecula;
 import br.com.quimicapp.R;
 import br.com.view.CadeiaImagens;
@@ -95,7 +94,11 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
             molecula.setTipoLigLeft(ligacao);
         }
 
-        Cadeia.getCadeia().getMoleculas().add(molecula);
+        try {
+            ControleActivityCadeia.getCadeia().getMoleculas().add(molecula);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         CadeiaImagens.getCadeiaImagens().getCompostosImagens().add(compostoNovo);
 
 //        for (Molecula m: Cadeia.getCadeia().getMoleculas()){
@@ -114,11 +117,15 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
     public Molecula buscarMolecula(){
         Molecula molecula = null;
 
-        for (Molecula m: Cadeia.getCadeia().getMoleculas()
-             ) {
-            if(m.getId()==existenteCompostoImg.getId()){
-                molecula = m;
+        try {
+            for (Molecula m: ControleActivityCadeia.getCadeia().getMoleculas()
+                 ) {
+                if(m.getId()==existenteCompostoImg.getId()){
+                    molecula = m;
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return molecula;
     }
@@ -137,33 +144,37 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
         verificador[2].vizinho = false;
         verificador[3].vizinho = false;
 
-        for (Molecula m: Cadeia.getCadeia().getMoleculas()){
-            //Up
-            if(cpi.getComposto().getY()-200==m.getPosY() && cpi.getComposto().getX()==m.getPosX()){
-                verificador[0].vizinho = true;
-                verificador[0].posXvizinho = m.getPosX();
-                verificador[0].posYvizinho = m.getPosY();
-            }
-            //Right
-            else if (cpi.getComposto().getX() + 200 == m.getPosX() && cpi.getComposto().getY()==m.getPosY()) {
-                verificador[1].vizinho = true;
-                verificador[1].posXvizinho = m.getPosX();
-                verificador[1].posYvizinho = m.getPosY();
-            }
+        try {
+            for (Molecula m: ControleActivityCadeia.getCadeia().getMoleculas()){
+                //Up
+                if(cpi.getComposto().getY()-200==m.getPosY() && cpi.getComposto().getX()==m.getPosX()){
+                    verificador[0].vizinho = true;
+                    verificador[0].posXvizinho = m.getPosX();
+                    verificador[0].posYvizinho = m.getPosY();
+                }
+                //Right
+                else if (cpi.getComposto().getX() + 200 == m.getPosX() && cpi.getComposto().getY()==m.getPosY()) {
+                    verificador[1].vizinho = true;
+                    verificador[1].posXvizinho = m.getPosX();
+                    verificador[1].posYvizinho = m.getPosY();
+                }
 
-            //Down
-            else if (cpi.getComposto().getY() + 200 == m.getPosY() && cpi.getComposto().getX()==m.getPosX()) {
-                verificador[2].vizinho = true;
-                verificador[2].posXvizinho = m.getPosX();
-                verificador[2].posYvizinho = m.getPosY();
-            }
+                //Down
+                else if (cpi.getComposto().getY() + 200 == m.getPosY() && cpi.getComposto().getX()==m.getPosX()) {
+                    verificador[2].vizinho = true;
+                    verificador[2].posXvizinho = m.getPosX();
+                    verificador[2].posYvizinho = m.getPosY();
+                }
 
-            //Left
-            else if (cpi.getComposto().getX() - 200 == m.getPosX() && cpi.getComposto().getY()==m.getPosY()) {
-                verificador[3].vizinho = true;
-                verificador[3].posXvizinho = m.getPosX();
-                verificador[3].posYvizinho = m.getPosY();
+                //Left
+                else if (cpi.getComposto().getX() - 200 == m.getPosX() && cpi.getComposto().getY()==m.getPosY()) {
+                    verificador[3].vizinho = true;
+                    verificador[3].posXvizinho = m.getPosX();
+                    verificador[3].posYvizinho = m.getPosY();
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return verificador;
     }

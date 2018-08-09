@@ -5,6 +5,7 @@ import android.content.Context;
 import br.com.model.DAO.fabricaDAO.CadeiaDAO;
 import br.com.model.DAO.fabricaDAO.FabricaDAOs;
 import br.com.model.DAO.fabricaDAO.InfixoDAO;
+import br.com.model.DAO.fabricaDAO.MoleculaDAO;
 import br.com.model.DAO.fabricaDAO.PrefixoDAO;
 import br.com.model.DAO.fabricaDAO.SufixoDAO;
 
@@ -27,6 +28,11 @@ public class FabricaDAOSQLite extends FabricaDAOs {
     @Override
     public SufixoDAO createSufixoDAO(Context context) {
         return new SufixoDAOSQLite(ConexaoSQLite.getConexaoSQLite(context));
+    }
+
+    @Override
+    public MoleculaDAO createMoleculaDAO(Context context) {
+        return new MoleculaDAOSQLite(ConexaoSQLite.getConexaoSQLite(context));
     }
 
 }

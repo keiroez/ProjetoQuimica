@@ -21,11 +21,14 @@ import br.com.view.Composto_img;
 public class ControleActivityCadeia implements View.OnClickListener {
     private CadeiaActivity context;
     private DadosIUPAC dadosIUPAC;
+    private static final Cadeia cadeia = new Cadeia();
 
     public ControleActivityCadeia(CadeiaActivity context, Composto_img composto_img) throws Exception {
         this.context = context;
         Molecula molecula = new Molecula((int)composto_img.getComposto().getX(),(int)composto_img.getComposto().getY());
-        Cadeia.getCadeia().getMoleculas().add(molecula);
+        this.getCadeia().getMoleculas().add(molecula);
+
+
 
         dadosIUPAC = new DadosIUPAC();
         String[] dados = preencherDadosPrefixos();
@@ -37,7 +40,7 @@ public class ControleActivityCadeia implements View.OnClickListener {
         dadosIUPAC.setSufixos(preencherDadosSufixos());
 
         //Inserir dados IUPAC(Prefixos, infixos e sufixos)
-        Fachada.inserirDadosIUPAC(dadosIUPAC,context);
+        Fachada.inserirDadosIUPAC(dadosIUPAC,this.context);
 
     }
 
@@ -46,7 +49,12 @@ public class ControleActivityCadeia implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.bt_gerar){
-            int[] cont = Cadeia.getCadeia().gerarNomeclatura(Cadeia.getCadeia().getMoleculas().get(0),"");
+            int[] cont = new int[0];
+            try {
+                cont = this.getCadeia().gerarNomeclatura(this.getCadeia().getMoleculas().get(0),"");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             System.out.println("Qtd C= "+cont[0]);
             System.out.println("simples= "+cont[1]);
             System.out.println("dupla= "+cont[2]);
@@ -54,7 +62,7 @@ public class ControleActivityCadeia implements View.OnClickListener {
             String nome = "Erro";
             try {
                 nome = CadeiaAdapter.transformarString(
-                        Cadeia.getCadeia().gerarNomeclatura(Cadeia.getCadeia().getMoleculas().get(0), ""), context);
+                        this.getCadeia().gerarNomeclatura(this.getCadeia().getMoleculas().get(0), ""), context);
                 System.out.println(nome);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -63,7 +71,11 @@ public class ControleActivityCadeia implements View.OnClickListener {
         }
 
         if(v.getId()== R.id.bt_limpar){
-            Cadeia.getCadeia().getMoleculas().clear();
+            try {
+                this.getCadeia().getMoleculas().clear();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             CadeiaImagens.getCadeiaImagens().getCompostosImagens().clear();
 
             Molecula.zerarContador();
@@ -210,5 +222,9 @@ public class ControleActivityCadeia implements View.OnClickListener {
         palavras[68]="nonahexacont";
 
         return palavras;
+    }
+
+    public static Cadeia getCadeia() {
+        return cadeia;
     }
 }
