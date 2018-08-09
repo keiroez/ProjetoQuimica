@@ -12,6 +12,7 @@ import br.com.model.VO.Molecula;
 
 public class Fachada {
     public static final FabricaDAOs fabricaDAO = new FabricaDAOSQLite();
+
     public static void inserirDadosIUPAC(DadosIUPAC dadosIUPAC, Context context) throws Exception {
         if(fabricaDAO.createPrefixoDAO(context).selectDadosPrefixo()==null){
             fabricaDAO.createPrefixoDAO(context).insertDadosPrefixo(dadosIUPAC.getPrefixos());

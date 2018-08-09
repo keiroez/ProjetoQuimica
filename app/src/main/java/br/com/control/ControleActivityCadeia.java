@@ -51,7 +51,7 @@ public class ControleActivityCadeia implements View.OnClickListener {
         if(v.getId()==R.id.bt_gerar){
             int[] cont = new int[0];
             try {
-                cont = this.getCadeia().gerarNomeclatura(this.getCadeia().getMoleculas().get(0),"");
+                cont = this.getCadeia().verificarCadeia(this.getCadeia().getMoleculas().get(0),"");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -62,7 +62,7 @@ public class ControleActivityCadeia implements View.OnClickListener {
             String nome = "Erro";
             try {
                 nome = CadeiaAdapter.transformarString(
-                        this.getCadeia().gerarNomeclatura(this.getCadeia().getMoleculas().get(0), ""), context);
+                        this.getCadeia().verificarCadeia(this.getCadeia().getMoleculas().get(0), ""), context);
                 System.out.println(nome);
             } catch (Exception e) {
                 e.printStackTrace();
