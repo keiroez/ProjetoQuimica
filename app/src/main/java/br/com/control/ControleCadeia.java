@@ -57,19 +57,19 @@ public class ControleCadeia implements View.OnClickListener {
         }
 
         if(v== ciExistente.getLigacaoDown()){
-            ciExistente.alertComposto("ligacao", "down");
+            //ciExistente.alertComposto("ligacao", "down");
         }
 
         if(v== ciExistente.getLigacaoLeft()){
-            ciExistente.alertComposto("ligacao", "left");
+            //ciExistente.alertComposto("ligacao", "left");
         }
 
         if(v== ciExistente.getLigacaoRight()){
-            ciExistente.alertComposto("ligacao", "right");
+            //ciExistente.alertComposto("ligacao", "right");
         }
 
         if(v== ciExistente.getLigacaoUp()){
-            ciExistente.alertComposto("ligacao", "up");
+            //ciExistente.alertComposto("ligacao", "up");
         }
 
     }

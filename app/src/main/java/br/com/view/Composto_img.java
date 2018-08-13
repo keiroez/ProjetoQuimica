@@ -59,7 +59,7 @@ public class Composto_img {
         elemento1.setTextColor(Color.WHITE);
         elemento2.setTextColor(Color.WHITE);
 
-        qtdElemento1.setText("2");
+        qtdElemento1.setText("4");
         qtdElemento1.setTextColor(Color.WHITE);
         qtdElemento2.setText("");
         qtdElemento2.setTextColor(Color.WHITE);
@@ -81,7 +81,7 @@ public class Composto_img {
         addUp.setY(composto.getY()-70);
         addDown.setY(composto.getY()+120);
 
-        elemento1.setX(composto.getX()+15);
+        elemento1.setX(composto.getX()+30);
         elemento1.setY(composto.getY()+20);
         elemento2.setX(elemento1.getX()+40);
         elemento2.setY(elemento1.getY());
@@ -158,7 +158,7 @@ public class Composto_img {
 
     }
 
-    public void adicionarLigacao(String ligacao, String lado){
+    public void adicionarLigacao(String ligacao, String lado, int ligacoes){
 
         if(lado.equals("left")) {
             if(addLeft!=null) {
@@ -257,6 +257,18 @@ public class Composto_img {
             ((CadeiaActivity) c).getRelativeLayout().addView(ligacaoDown);
         }
 
+        if(ligacoes==0 && addUp!=null){
+            ((CadeiaActivity) c).getRelativeLayout().removeView(addUp);
+        }
+        if(ligacoes==0 && addRight!=null){
+            ((CadeiaActivity) c).getRelativeLayout().removeView(addRight);
+        }
+        if(ligacoes==0 && addDown!=null){
+            ((CadeiaActivity) c).getRelativeLayout().removeView(addDown);
+        }
+        if(ligacoes==0 && addLeft!=null){
+            ((CadeiaActivity) c).getRelativeLayout().removeView(addLeft);
+        }
 
 
     }

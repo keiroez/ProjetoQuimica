@@ -6,10 +6,14 @@ public class Molecula {
     private Molecula ligacaoEsquerda = null;
     private Molecula ligacaoSuperior = null;
     private Molecula ligacaoInferior = null;
-    private String tipoLigLeft, tipoLigRight,tipoLigUp, tipoLigDown;
+    private String tipoLigLeft = "";
+    private String tipoLigRight = "";
+    private String tipoLigUp="";
+    private String tipoLigDown="";
     private int posX;
     private int posY;
     private static int contador = 1;
+    private int ligacoes = 4;
 
     private int ramificacao= 0;
 
@@ -118,5 +122,13 @@ public class Molecula {
 
     public void setRamificacao(int ramificacao) {
         this.ramificacao = ramificacao;
+    }
+
+    public int getLigacoes() {
+        return ligacoes;
+    }
+
+    public void setLigacoes(int ligacoes) {
+        this.ligacoes = ligacoes;
     }
 }

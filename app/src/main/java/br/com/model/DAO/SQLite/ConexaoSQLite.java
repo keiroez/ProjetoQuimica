@@ -8,7 +8,7 @@ public class ConexaoSQLite extends SQLiteOpenHelper {
     private static SQLiteDatabase database;
 
     private ConexaoSQLite(Context context) {
-        super(context, "bd_quimicapp_v1_0_0_2",null,1);
+        super(context, "bd_quimicapp_v1_0_0_3",null,1);
     }
 
     @Override

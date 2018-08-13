@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.model.DAO.Fachada;
 import br.com.model.VO.Cadeia;
@@ -51,23 +52,59 @@ public class ControleActivityCadeia implements View.OnClickListener {
         if(v.getId()==R.id.bt_gerar){
             int[] cont = new int[0];
             try {
-                cont = this.getCadeia().verificarCadeia(this.getCadeia().getMoleculas().get(0),"");
+                cont = this.getCadeia().gerarNomeclatura(this.getCadeia().getMoleculas().get(0),"");
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("Qtd C= "+cont[0]);
-            System.out.println("simples= "+cont[1]);
-            System.out.println("dupla= "+cont[2]);
-            System.out.println("tripla= "+cont[3]);
+//            System.out.println("Qtd C= "+cont[0]);
+//            System.out.println("simples= "+cont[1]);
+//            System.out.println("dupla= "+cont[2]);
+//            System.out.println("tripla= "+cont[3]);
             String nome = "Erro";
             try {
                 nome = CadeiaAdapter.transformarString(
-                        this.getCadeia().verificarCadeia(this.getCadeia().getMoleculas().get(0), ""), context);
-                System.out.println(nome);
+                        this.getCadeia().gerarNomeclatura(this.getCadeia().getMoleculas().get(0), ""), context);
+                //System.out.println(nome);
+
+                List<Molecula> lista = new ArrayList<>();
+                for (Molecula mol: cadeia.getMoleculas()
+                     ) {
+                    if(mol.getTipoLigUp().equals("dupla") || mol.getTipoLigUp().equals("tripla") ||
+                            mol.getTipoLigRight().equals("dupla") || mol.getTipoLigRight().equals("tripla") ||
+                            mol.getTipoLigDown().equals("dupla") || mol.getTipoLigDown().equals("tripla") ||
+                            mol.getTipoLigLeft().equals("dupla") || mol.getTipoLigLeft().equals("tripla")){
+                        lista.add(mol);
+                    }
+                }
+                for (Molecula mole: lista
+                     ) {
+                    if(mole.getTipoLigUp().equals("tripla") || mole.getTipoLigRight().equals("tripla") ||
+                            mole.getTipoLigDown().equals("tripla") || mole.getTipoLigLeft().equals("tripla")){
+                        for (Molecula m: cadeia.verificarCadeiaPrincipal(mole,"", true)) {
+                            System.out.println(m.getId());
+                        }
+                        break;
+                    }
+                    else if (mole.getTipoLigUp().equals("dupla") || mole.getTipoLigRight().equals("dupla") ||
+                            mole.getTipoLigDown().equals("dupla") || mole.getTipoLigLeft().equals("dupla")){
+                        for (Molecula m: cadeia.verificarCadeiaPrincipal(mole,"", true)) {
+                            System.out.println(m.getId());
+                        }
+                        break;
+                    }
+
+                }
+
+//                for (Molecula m: cadeia.verificarCadeiaPrincipal(cadeia.getMoleculas().get(0),"", true)) {
+//                    System.out.println(m.getId());
+//                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             context.alertNomenclatura(nome);
+
+
+
         }
 
         if(v.getId()== R.id.bt_limpar){
@@ -111,11 +148,11 @@ public class ControleActivityCadeia implements View.OnClickListener {
 
         infixos.add(new Infixo(2,"","an"));
         infixos.add(new Infixo(2,"di","en"));
-        infixos.add(new Infixo(2,"di","in"));
+        infixos.add(new Infixo(2,"d","in"));
 
         infixos.add(new Infixo(3,"","an"));
         infixos.add(new Infixo(3,"tri","en"));
-        infixos.add(new Infixo(3,"tri","in"));
+        infixos.add(new Infixo(3,"tr","in"));
 
         infixos.add(new Infixo(4,"","an"));
         infixos.add(new Infixo(4,"tetra","en"));
