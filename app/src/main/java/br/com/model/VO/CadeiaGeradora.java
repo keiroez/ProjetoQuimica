@@ -99,11 +99,13 @@ public abstract class CadeiaGeradora {
         Cadeia cadeiaPrincipalDown = new Cadeia();
         Cadeia cadeiaPrincipalLeft = new Cadeia();
 
-        cadeiaPrincipal.getMoleculas().add(molecula);
         Boolean up = false;
         Boolean right = false;
         Boolean down = false;
         Boolean left = false;
+
+        cadeiaPrincipal.getMoleculas().add(molecula);
+
 
         if(molecula.getLigacaoSuperior()!=null && !anterior.equals("up")) {
             for (Molecula m: verificarCadeiaPrincipal(molecula.getLigacaoSuperior(),"down", false)
@@ -129,157 +131,306 @@ public abstract class CadeiaGeradora {
                 cadeiaPrincipalLeft.getMoleculas().add(m);
             }
         }
+//        if(molecula.getLigacaoSuperior()!=null && molecula.getLigacaoDireita()!=null && molecula.getLigacaoInferior()!=null &&
+//                molecula.getLigacaoEsquerda()!=null){
+//            cadeiaPrincipal.getMoleculas().add(molecula);
+//        }
 
 
-        //DAQUI
-        for (Molecula moleculaLig: cadeiaPrincipalUp.getMoleculas()
-             ) {
-            if(!inicial && (moleculaLig.getTipoLigUp().equals("tripla") || moleculaLig.getTipoLigRight().equals("tripla") ||
-                    moleculaLig.getTipoLigDown().equals("tripla") || moleculaLig.getTipoLigLeft().equals("tripla"))){
-                for (Molecula m: cadeiaPrincipalUp.getMoleculas()
-                        ) {
-                    cadeiaPrincipal.getMoleculas().add(m);
+        //Verificar ligaçoes duplas e triplas
+        if(!inicial) {
+            for (Molecula m : cadeiaPrincipalUp.getMoleculas()
+                    ) {
+                if (m.getTipoLigUp().equals("tripla") || m.getTipoLigRight().equals("tripla") || m.getTipoLigDown().equals("tripla") || m.getTipoLigLeft().equals("tripla")
+                        || m.getTipoLigUp().equals("dupla") || m.getTipoLigRight().equals("dupla") || m.getTipoLigDown().equals("dupla") || m.getTipoLigLeft().equals("dupla")) {
+                    for (Molecula molec : cadeiaPrincipalUp.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(molec);
+                    }
                     up = true;
+                    break;
                 }
-                break;
             }
-            else if(!inicial && (moleculaLig.getTipoLigUp().equals("dupla") || moleculaLig.getTipoLigRight().equals("dupla") ||
-                    moleculaLig.getTipoLigDown().equals("dupla") || moleculaLig.getTipoLigLeft().equals("dupla"))){
-                for (Molecula m: cadeiaPrincipalUp.getMoleculas()
-                        ) {
-                    cadeiaPrincipal.getMoleculas().add(m);
-                    up = true;
-                }
-                break;
-            }
-        }
-
-        for (Molecula moleculaLig: cadeiaPrincipalRight.getMoleculas()) {
-            if(!inicial && (moleculaLig.getTipoLigUp().equals("tripla") || moleculaLig.getTipoLigRight().equals("tripla") ||
-                    moleculaLig.getTipoLigDown().equals("tripla") || moleculaLig.getTipoLigLeft().equals("tripla"))){
-                for (Molecula m: cadeiaPrincipalRight.getMoleculas()
-                        ) {
-                    cadeiaPrincipal.getMoleculas().add(m);
+            for (Molecula m : cadeiaPrincipalRight.getMoleculas()
+                    ) {
+                if (m.getTipoLigUp().equals("tripla") || m.getTipoLigRight().equals("tripla") || m.getTipoLigDown().equals("tripla") || m.getTipoLigLeft().equals("tripla")
+                        || m.getTipoLigUp().equals("dupla") || m.getTipoLigRight().equals("dupla") || m.getTipoLigDown().equals("dupla") || m.getTipoLigLeft().equals("dupla")) {
+                    for (Molecula molec : cadeiaPrincipalRight.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(molec);
+                    }
                     right = true;
+                    break;
                 }
-                break;
             }
-            else if(!inicial && (moleculaLig.getTipoLigUp().equals("dupla") || moleculaLig.getTipoLigRight().equals("dupla") ||
-                    moleculaLig.getTipoLigDown().equals("dupla") || moleculaLig.getTipoLigLeft().equals("dupla"))){
-                for (Molecula m: cadeiaPrincipalRight.getMoleculas()
-                        ) {
-                    cadeiaPrincipal.getMoleculas().add(m);
-                    right = true;
-                }
-                break;
-            }
-        }
 
-        for (Molecula moleculaLig: cadeiaPrincipalDown.getMoleculas()
-                ) {
-            if(!inicial && (moleculaLig.getTipoLigUp().equals("tripla") || moleculaLig.getTipoLigRight().equals("tripla") ||
-                    moleculaLig.getTipoLigDown().equals("tripla") || moleculaLig.getTipoLigLeft().equals("tripla"))){
-                for (Molecula m: cadeiaPrincipalDown.getMoleculas()
-                        ) {
-                    cadeiaPrincipal.getMoleculas().add(m);
+            for (Molecula m : cadeiaPrincipalDown.getMoleculas()
+                    ) {
+                if (m.getTipoLigUp().equals("tripla") || m.getTipoLigRight().equals("tripla") || m.getTipoLigDown().equals("tripla") || m.getTipoLigLeft().equals("tripla")
+                        || m.getTipoLigUp().equals("dupla") || m.getTipoLigRight().equals("dupla") || m.getTipoLigDown().equals("dupla") || m.getTipoLigLeft().equals("dupla")) {
+                    for (Molecula molec : cadeiaPrincipalDown.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(molec);
+                    }
                     down = true;
+                    break;
                 }
-                break;
-            }
-            else if(!inicial && (moleculaLig.getTipoLigUp().equals("dupla") || moleculaLig.getTipoLigRight().equals("dupla") ||
-                    moleculaLig.getTipoLigDown().equals("dupla") || moleculaLig.getTipoLigLeft().equals("dupla"))){
-                for (Molecula m: cadeiaPrincipalDown.getMoleculas()
-                        ) {
-                    cadeiaPrincipal.getMoleculas().add(m);
-                    down = true;
-                }
-                break;
+
             }
 
-        }
-
-        for (Molecula moleculaLig: cadeiaPrincipalLeft.getMoleculas()
-                ) {
-            if(!inicial && (moleculaLig.getTipoLigUp().equals("tripla") || moleculaLig.getTipoLigRight().equals("tripla") ||
-                    moleculaLig.getTipoLigDown().equals("tripla") || moleculaLig.getTipoLigLeft().equals("tripla"))){
-                for (Molecula m: cadeiaPrincipalLeft.getMoleculas()
-                        ) {
-                    cadeiaPrincipal.getMoleculas().add(m);
+            for (Molecula m : cadeiaPrincipalLeft.getMoleculas()
+                    ) {
+                if (m.getTipoLigUp().equals("tripla") || m.getTipoLigRight().equals("tripla") || m.getTipoLigDown().equals("tripla") || m.getTipoLigLeft().equals("tripla")
+                        || m.getTipoLigUp().equals("dupla") || m.getTipoLigRight().equals("dupla") || m.getTipoLigDown().equals("dupla") || m.getTipoLigLeft().equals("dupla")) {
+                    for (Molecula molec : cadeiaPrincipalLeft.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(molec);
+                    }
                     left = true;
+                    break;
                 }
-                break;
+
             }
-            else if(!inicial && (moleculaLig.getTipoLigUp().equals("dupla") || moleculaLig.getTipoLigRight().equals("dupla") ||
-                    moleculaLig.getTipoLigDown().equals("dupla") || moleculaLig.getTipoLigLeft().equals("dupla"))){
-                for (Molecula m: cadeiaPrincipalLeft.getMoleculas()
-                        ) {
-                    cadeiaPrincipal.getMoleculas().add(m);
-                    left = true;
+
+            if (!up && !right && !down && !left) {
+                //Verificar cadeia maior
+                if (cadeiaPrincipalUp.getMoleculas().size() > cadeiaPrincipalRight.getMoleculas().size()
+                        && cadeiaPrincipalUp.getMoleculas().size() > cadeiaPrincipalDown.getMoleculas().size()
+                        && cadeiaPrincipalUp.getMoleculas().size() > cadeiaPrincipalLeft.getMoleculas().size()) {
+                    for (Molecula m : cadeiaPrincipalUp.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(m);
+                    }
+                } else if (cadeiaPrincipalRight.getMoleculas().size() > cadeiaPrincipalUp.getMoleculas().size()
+                        && cadeiaPrincipalRight.getMoleculas().size() > cadeiaPrincipalDown.getMoleculas().size()
+                        && cadeiaPrincipalRight.getMoleculas().size() > cadeiaPrincipalLeft.getMoleculas().size()) {
+                    for (Molecula m : cadeiaPrincipalRight.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(m);
+                    }
+                } else if (cadeiaPrincipalDown.getMoleculas().size() > cadeiaPrincipalRight.getMoleculas().size()
+                        && cadeiaPrincipalDown.getMoleculas().size() > cadeiaPrincipalUp.getMoleculas().size()
+                        && cadeiaPrincipalDown.getMoleculas().size() > cadeiaPrincipalLeft.getMoleculas().size()) {
+                    for (Molecula m : cadeiaPrincipalDown.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(m);
+                    }
+                } else if (cadeiaPrincipalLeft.getMoleculas().size() > cadeiaPrincipalRight.getMoleculas().size()
+                        && cadeiaPrincipalLeft.getMoleculas().size() > cadeiaPrincipalDown.getMoleculas().size()
+                        && cadeiaPrincipalLeft.getMoleculas().size() > cadeiaPrincipalUp.getMoleculas().size()) {
+                    for (Molecula m : cadeiaPrincipalLeft.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(m);
+                    }
                 }
-                break;
+
+                //ramificaçoes iguais
+                else {
+                    //UP
+                    if (cadeiaPrincipalUp.getMoleculas().size() == cadeiaPrincipalRight.getMoleculas().size()) {
+                        for (Molecula m : cadeiaPrincipalUp.getMoleculas()
+                                ) {
+                            cadeiaPrincipal.getMoleculas().add(m);
+                        }
+                    } else if (cadeiaPrincipalUp.getMoleculas().size() == cadeiaPrincipalDown.getMoleculas().size()) {
+                        for (Molecula m : cadeiaPrincipalUp.getMoleculas()
+                                ) {
+                            cadeiaPrincipal.getMoleculas().add(m);
+                        }
+                    } else if (cadeiaPrincipalUp.getMoleculas().size() == cadeiaPrincipalLeft.getMoleculas().size()) {
+                        for (Molecula m : cadeiaPrincipalUp.getMoleculas()
+                                ) {
+                            cadeiaPrincipal.getMoleculas().add(m);
+                        }
+                    }
+
+                    //Right
+                    else if (cadeiaPrincipalRight.getMoleculas().size() == cadeiaPrincipalDown.getMoleculas().size()) {
+                        for (Molecula m : cadeiaPrincipalRight.getMoleculas()
+                                ) {
+                            cadeiaPrincipal.getMoleculas().add(m);
+                        }
+                    } else if (cadeiaPrincipalRight.getMoleculas().size() == cadeiaPrincipalLeft.getMoleculas().size()) {
+                        for (Molecula m : cadeiaPrincipalRight.getMoleculas()
+                                ) {
+                            cadeiaPrincipal.getMoleculas().add(m);
+                        }
+                    }
+
+                    //Down
+                    else if (cadeiaPrincipalDown.getMoleculas().size() == cadeiaPrincipalLeft.getMoleculas().size()) {
+                        for (Molecula m : cadeiaPrincipalDown.getMoleculas()
+                                ) {
+                            cadeiaPrincipal.getMoleculas().add(m);
+                        }
+                    }
+                }
             }
         }
 
-        //AQUI
-        if(cadeiaPrincipalUp.getMoleculas().size()>cadeiaPrincipalRight.getMoleculas().size() &&
-                cadeiaPrincipalUp.getMoleculas().size()>cadeiaPrincipalDown.getMoleculas().size() &&
-                cadeiaPrincipalUp.getMoleculas().size()>cadeiaPrincipalLeft.getMoleculas().size() && !inicial && !up){
-            for (Molecula m:cadeiaPrincipalUp.getMoleculas()
-                    ) {
-                cadeiaPrincipal.getMoleculas().add(m);
-            }
-        }
-        else if(cadeiaPrincipalRight.getMoleculas().size()>cadeiaPrincipalUp.getMoleculas().size() &&
-                cadeiaPrincipalRight.getMoleculas().size()>cadeiaPrincipalDown.getMoleculas().size() &&
-                cadeiaPrincipalRight.getMoleculas().size()>cadeiaPrincipalLeft.getMoleculas().size() && !inicial && !right){
-            for (Molecula m:cadeiaPrincipalRight.getMoleculas()
-                    ) {
-                cadeiaPrincipal.getMoleculas().add(m);
-            }
-        }
-
-       else if(cadeiaPrincipalDown.getMoleculas().size()>cadeiaPrincipalUp.getMoleculas().size() &&
-                cadeiaPrincipalDown.getMoleculas().size()>cadeiaPrincipalRight.getMoleculas().size() &&
-                cadeiaPrincipalDown.getMoleculas().size()>cadeiaPrincipalLeft.getMoleculas().size() && !inicial && !down){
-            for (Molecula m:cadeiaPrincipalDown.getMoleculas()
-                    ) {
-                cadeiaPrincipal.getMoleculas().add(m);
-            }
-        }
-
-       else if(cadeiaPrincipalLeft.getMoleculas().size()>cadeiaPrincipalUp.getMoleculas().size() &&
-                cadeiaPrincipalLeft.getMoleculas().size()>cadeiaPrincipalRight.getMoleculas().size() &&
-                cadeiaPrincipalLeft.getMoleculas().size()>cadeiaPrincipalDown.getMoleculas().size() && !inicial && !left){
-            for (Molecula m:cadeiaPrincipalLeft.getMoleculas()
-                    ) {
-                cadeiaPrincipal.getMoleculas().add(m);
-            }
-        }
 
         if(inicial){
-            for (Molecula m:cadeiaPrincipalUp.getMoleculas()
+            for (Molecula m: cadeiaPrincipalUp.getMoleculas()
+                 ) {
+                cadeiaPrincipal.getMoleculas().add(m);
+            }
+            for (Molecula m: cadeiaPrincipalRight.getMoleculas()
                     ) {
                 cadeiaPrincipal.getMoleculas().add(m);
             }
-            for (Molecula m:cadeiaPrincipalRight.getMoleculas()
+            for (Molecula m: cadeiaPrincipalDown.getMoleculas()
                     ) {
                 cadeiaPrincipal.getMoleculas().add(m);
             }
-            for (Molecula m:cadeiaPrincipalDown.getMoleculas()
-                    ) {
-                cadeiaPrincipal.getMoleculas().add(m);
-            }
-            for (Molecula m:cadeiaPrincipalLeft.getMoleculas()
+            for (Molecula m: cadeiaPrincipalLeft.getMoleculas()
                     ) {
                 cadeiaPrincipal.getMoleculas().add(m);
             }
         }
+
 
         return cadeiaPrincipal.getMoleculas();
 
     }
 
+
+
+
     private void verificarRamificacoes(){
+
+    }
+
+    public List<Molecula> verificarCadeiaPrincipal2(Molecula molecula, String anterior, Boolean inicial) throws Exception {
+        Cadeia cadeiaPrincipal = new Cadeia();
+        Cadeia cadeiaPrincipalUp = new Cadeia();
+        Cadeia cadeiaPrincipalRight = new Cadeia();
+        Cadeia cadeiaPrincipalDown = new Cadeia();
+        Cadeia cadeiaPrincipalLeft = new Cadeia();
+
+
+        cadeiaPrincipal.getMoleculas().add(molecula);
+
+
+        if(molecula.getLigacaoSuperior()!=null && !anterior.equals("up")) {
+            for (Molecula m: verificarCadeiaPrincipal2(molecula.getLigacaoSuperior(),"down", false)
+                    ) {
+                cadeiaPrincipalUp.getMoleculas().add(m);
+            }
+        }
+        if(molecula.getLigacaoDireita()!=null && !anterior.equals("right")) {
+            for (Molecula m: verificarCadeiaPrincipal2(molecula.getLigacaoDireita(),"left", false)
+                    ) {
+                cadeiaPrincipalRight.getMoleculas().add(m);
+            }
+        }
+        if(molecula.getLigacaoInferior()!=null && !anterior.equals("down")){
+            for (Molecula m: verificarCadeiaPrincipal2(molecula.getLigacaoInferior(),"up",false)
+                    ) {
+                cadeiaPrincipalDown.getMoleculas().add(m);
+            }
+        }
+        if(molecula.getLigacaoEsquerda()!=null && !anterior.equals("left")){
+            for (Molecula m: verificarCadeiaPrincipal2(molecula.getLigacaoEsquerda(),"right", false)
+                    ) {
+                cadeiaPrincipalLeft.getMoleculas().add(m);
+            }
+        }
+
+//        if(!inicial) {
+            //Verificar cadeia maior
+            if (cadeiaPrincipalUp.getMoleculas().size() > cadeiaPrincipalRight.getMoleculas().size()
+                    && cadeiaPrincipalUp.getMoleculas().size() > cadeiaPrincipalDown.getMoleculas().size()
+                    && cadeiaPrincipalUp.getMoleculas().size() > cadeiaPrincipalLeft.getMoleculas().size()) {
+                for (Molecula m : cadeiaPrincipalUp.getMoleculas()
+                        ) {
+                    cadeiaPrincipal.getMoleculas().add(m);
+                }
+            } else if (cadeiaPrincipalRight.getMoleculas().size() > cadeiaPrincipalUp.getMoleculas().size()
+                    && cadeiaPrincipalRight.getMoleculas().size() > cadeiaPrincipalDown.getMoleculas().size()
+                    && cadeiaPrincipalRight.getMoleculas().size() > cadeiaPrincipalLeft.getMoleculas().size()) {
+                for (Molecula m : cadeiaPrincipalRight.getMoleculas()
+                        ) {
+                    cadeiaPrincipal.getMoleculas().add(m);
+                }
+            } else if (cadeiaPrincipalDown.getMoleculas().size() > cadeiaPrincipalRight.getMoleculas().size()
+                    && cadeiaPrincipalDown.getMoleculas().size() > cadeiaPrincipalUp.getMoleculas().size()
+                    && cadeiaPrincipalDown.getMoleculas().size() > cadeiaPrincipalLeft.getMoleculas().size()) {
+                for (Molecula m : cadeiaPrincipalDown.getMoleculas()
+                        ) {
+                    cadeiaPrincipal.getMoleculas().add(m);
+                }
+            } else if (cadeiaPrincipalLeft.getMoleculas().size() > cadeiaPrincipalRight.getMoleculas().size()
+                    && cadeiaPrincipalLeft.getMoleculas().size() > cadeiaPrincipalDown.getMoleculas().size()
+                    && cadeiaPrincipalLeft.getMoleculas().size() > cadeiaPrincipalUp.getMoleculas().size()) {
+                for (Molecula m : cadeiaPrincipalLeft.getMoleculas()
+                        ) {
+                    cadeiaPrincipal.getMoleculas().add(m);
+                }
+            }
+
+            //ramificaçoes iguais
+            else {
+                //UP
+                if (cadeiaPrincipalUp.getMoleculas().size() == cadeiaPrincipalRight.getMoleculas().size()) {
+                    for (Molecula m : cadeiaPrincipalUp.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(m);
+                    }
+                } else if (cadeiaPrincipalUp.getMoleculas().size() == cadeiaPrincipalDown.getMoleculas().size()) {
+                    for (Molecula m : cadeiaPrincipalUp.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(m);
+                    }
+                } else if (cadeiaPrincipalUp.getMoleculas().size() == cadeiaPrincipalLeft.getMoleculas().size()) {
+                    for (Molecula m : cadeiaPrincipalUp.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(m);
+                    }
+                }
+
+                //Right
+                else if (cadeiaPrincipalRight.getMoleculas().size() == cadeiaPrincipalDown.getMoleculas().size()) {
+                    for (Molecula m : cadeiaPrincipalRight.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(m);
+                    }
+                } else if (cadeiaPrincipalRight.getMoleculas().size() == cadeiaPrincipalLeft.getMoleculas().size()) {
+                    for (Molecula m : cadeiaPrincipalRight.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(m);
+                    }
+                }
+
+                //Down
+                else if (cadeiaPrincipalDown.getMoleculas().size() == cadeiaPrincipalLeft.getMoleculas().size()) {
+                    for (Molecula m : cadeiaPrincipalDown.getMoleculas()
+                            ) {
+                        cadeiaPrincipal.getMoleculas().add(m);
+                    }
+                }
+            }
+//        }
+
+//        if(inicial){
+//            for (Molecula m: cadeiaPrincipalUp.getMoleculas()
+//                    ) {
+//                cadeiaPrincipal.getMoleculas().add(m);
+//            }
+//            for (Molecula m: cadeiaPrincipalRight.getMoleculas()
+//                    ) {
+//                cadeiaPrincipal.getMoleculas().add(m);
+//            }
+//            for (Molecula m: cadeiaPrincipalDown.getMoleculas()
+//                    ) {
+//                cadeiaPrincipal.getMoleculas().add(m);
+//            }
+//            for (Molecula m: cadeiaPrincipalLeft.getMoleculas()
+//                    ) {
+//                cadeiaPrincipal.getMoleculas().add(m);
+//            }
+//        }
+
+        return cadeiaPrincipal.getMoleculas();
 
     }
 }

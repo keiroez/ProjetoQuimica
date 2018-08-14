@@ -69,35 +69,59 @@ public class ControleActivityCadeia implements View.OnClickListener {
                 List<Molecula> lista = new ArrayList<>();
                 for (Molecula mol: cadeia.getMoleculas()
                      ) {
-                    if(mol.getTipoLigUp().equals("dupla") || mol.getTipoLigUp().equals("tripla") ||
-                            mol.getTipoLigRight().equals("dupla") || mol.getTipoLigRight().equals("tripla") ||
-                            mol.getTipoLigDown().equals("dupla") || mol.getTipoLigDown().equals("tripla") ||
-                            mol.getTipoLigLeft().equals("dupla") || mol.getTipoLigLeft().equals("tripla")){
+                    if(mol.getTipoLigUp().equals("tripla") ||
+                            mol.getTipoLigRight().equals("tripla") ||
+                            mol.getTipoLigDown().equals("tripla") ||
+                            mol.getTipoLigLeft().equals("tripla")){
                         lista.add(mol);
-                    }
-                }
-                for (Molecula mole: lista
-                     ) {
-                    if(mole.getTipoLigUp().equals("tripla") || mole.getTipoLigRight().equals("tripla") ||
-                            mole.getTipoLigDown().equals("tripla") || mole.getTipoLigLeft().equals("tripla")){
-                        for (Molecula m: cadeia.verificarCadeiaPrincipal(mole,"", true)) {
-                            System.out.println(m.getId());
-                        }
                         break;
                     }
-                    else if (mole.getTipoLigUp().equals("dupla") || mole.getTipoLigRight().equals("dupla") ||
-                            mole.getTipoLigDown().equals("dupla") || mole.getTipoLigLeft().equals("dupla")){
-                        for (Molecula m: cadeia.verificarCadeiaPrincipal(mole,"", true)) {
-                            System.out.println(m.getId());
-                        }
-                        break;
-                    }
-
                 }
 
-//                for (Molecula m: cadeia.verificarCadeiaPrincipal(cadeia.getMoleculas().get(0),"", true)) {
-//                    System.out.println(m.getId());
-//                }
+                if(lista.isEmpty()){
+                    for (Molecula mol: cadeia.getMoleculas()
+                            ) {
+                        if(mol.getTipoLigUp().equals("dupla") ||
+                                mol.getTipoLigRight().equals("dupla") ||
+                                mol.getTipoLigDown().equals("dupla") ||
+                                mol.getTipoLigLeft().equals("dupla")){
+                            lista.add(mol);
+                            break;
+                        }
+                    }
+                }
+
+                if(!lista.isEmpty()) {
+                    for (Molecula mole : lista
+                            ) {
+                        if (mole.getTipoLigUp().equals("tripla") || mole.getTipoLigRight().equals("tripla") ||
+                                mole.getTipoLigDown().equals("tripla") || mole.getTipoLigLeft().equals("tripla")) {
+                            for (Molecula m : cadeia.verificarCadeiaPrincipal(mole, "", true)) {
+                                System.out.println(m.getId());
+                            }
+                            break;
+                        } else if (mole.getTipoLigUp().equals("dupla") || mole.getTipoLigRight().equals("dupla") ||
+                                mole.getTipoLigDown().equals("dupla") || mole.getTipoLigLeft().equals("dupla")) {
+                            for (Molecula m : cadeia.verificarCadeiaPrincipal(mole, "", true)) {
+                                System.out.println(m.getId());
+                            }
+                            break;
+                        }
+                    }
+                }
+                else {
+                    Molecula moleculaInicial = cadeia.getMoleculas().get(0);
+                    for (Molecula mo: cadeia.getMoleculas()
+                         ) {
+                        if(mo.getRamificacao()>2){
+                            moleculaInicial = mo;
+                            break;
+                        }
+                    }
+                    for (Molecula m : cadeia.verificarCadeiaPrincipal2(moleculaInicial, "", true)) {
+                        System.out.println(m.getId());
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
