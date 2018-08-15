@@ -22,7 +22,20 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="QuimicApp"
-        android:textSize="50dp"
         android:textAlignment="center"
-        android:textColor="@color/colorInicio"/>
+        android:textColor="@color/colorInicio"
+        android:textSize="50dp"
+
+        />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Nomenclatura Orgânica"
+        android:textAlignment="center"
+        android:textColor="@color/composto"
+        android:textSize="20dp"
+        />
 </LinearLayout>
