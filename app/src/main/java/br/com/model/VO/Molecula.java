@@ -14,7 +14,8 @@ public class Molecula {
     private int posY;
     private static int contador = 1;
     private int ligacoes = 4;
-    private int numeracaoNaCadeia;
+    private int numeracaoNaCadeia = 0;
+    private Boolean principal = false;
 
     private int ramificacao= 0;
 
@@ -139,5 +140,13 @@ public class Molecula {
 
     public void setNumeracaoNaCadeia(int numeracaoNaCadeia) {
         this.numeracaoNaCadeia = numeracaoNaCadeia;
+    }
+
+    public Boolean getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(Boolean principal) {
+        this.principal = principal;
     }
 }

@@ -15,6 +15,7 @@ public class CadeiaAdapter {
         String infixo = Fachada.buscarInfixoQtd(1,"an", context);
 
 
+
         if(vetor[2]>0 && vetor[3]==0){
             infixo = Fachada.buscarInfixoQtd(vetor[2],"en", context);
         }

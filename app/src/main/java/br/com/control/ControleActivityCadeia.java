@@ -52,7 +52,7 @@ public class ControleActivityCadeia implements View.OnClickListener {
         if(v.getId()==R.id.bt_gerar){
             int[] cont = new int[0];
             try {
-                cont = this.getCadeia().gerarNomeclatura(this.getCadeia().getMoleculas().get(0),"");
+              //  cont = this.getCadeia().gerarNomeclatura(this.getCadeia().getMoleculas().get(0),"");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -61,6 +61,8 @@ public class ControleActivityCadeia implements View.OnClickListener {
             String nome = "Erro";
             String radical = "";
             StringBuilder stringBuilder = new StringBuilder(radical);
+
+            ArrayList<String[]> radicais = new ArrayList<>();
             try {
 //                nome = CadeiaAdapter.transformarString(
 //                        this.getCadeia().gerarNomeclatura(this.getCadeia().getMoleculas().get(0), ""), context);
@@ -100,16 +102,17 @@ public class ControleActivityCadeia implements View.OnClickListener {
                         if (mole.getTipoLigUp().equals("tripla") || mole.getTipoLigRight().equals("tripla") ||
                                 mole.getTipoLigDown().equals("tripla") || mole.getTipoLigLeft().equals("tripla")) {
                             cadeiaPrincipal.setMoleculas(cadeia.verificarCadeiaPrincipal(mole, "", true));
-
+                            mole.setPrincipal(true);
                             for (Molecula m : cadeia.verificarCadeiaPrincipal(mole, "", true)) {
-                                System.out.println(m.getId());
+                                //System.out.println(m.getId());
                             }
                             break;
                         } else if (mole.getTipoLigUp().equals("dupla") || mole.getTipoLigRight().equals("dupla") ||
                                 mole.getTipoLigDown().equals("dupla") || mole.getTipoLigLeft().equals("dupla")) {
                             cadeiaPrincipal.setMoleculas(cadeia.verificarCadeiaPrincipal(mole, "", true));
+                            mole.setPrincipal(true);
                             for (Molecula m : cadeia.verificarCadeiaPrincipal(mole, "", true)) {
-                                System.out.println(m.getId());
+                                //System.out.println(m.getId());
                             }
                             break;
                         }
@@ -124,6 +127,7 @@ public class ControleActivityCadeia implements View.OnClickListener {
                             break;
                         }
                     }
+                    moleculaInicial.setPrincipal(true);
                     cadeiaPrincipal.setMoleculas(cadeia.verificarCadeiaPrincipal(moleculaInicial, "", true));
                     for (Molecula m : cadeia.verificarCadeiaPrincipal(moleculaInicial, "", true)) {
                         //System.out.println(m.getId());
@@ -131,11 +135,9 @@ public class ControleActivityCadeia implements View.OnClickListener {
                 }
 
 
-                List<Molecula> radicais = new ArrayList<>();
+
                 Cadeia cadeiaCompleta = new Cadeia();
                 cadeiaCompleta.setMoleculas(cadeia.getMoleculas());
-
-
 
                 for (Molecula m: cadeiaCompleta.getMoleculas()) {
                     Boolean existe= false;
@@ -145,37 +147,158 @@ public class ControleActivityCadeia implements View.OnClickListener {
                             break;
                         }
                     }
-
-
                     if(!existe){
                         for (Molecula mol: cadeiaPrincipal.getMoleculas()
-                             ) {
+                                ) {
                             if(mol.getLigacaoSuperior()==m){
                                 mol.setLigacaoSuperior(null);
-                                stringBuilder.append(CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m,"down"), context)+", ");
-                                radicais.add(m);
                             }
                             else if(mol.getLigacaoDireita()==m){
                                 mol.setLigacaoDireita(null);
-                                stringBuilder.append(CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m,"left"), context)+", ");
-                                radicais.add(m);
                             }
                             else if(mol.getLigacaoInferior()==m){
                                 mol.setLigacaoInferior(null);
-                                stringBuilder.append(CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m,"up"), context)+", ");
-                                radicais.add(m);
+
                             }
                             else if(mol.getLigacaoEsquerda()==m){
                                 mol.setLigacaoEsquerda(null);
-                                stringBuilder.append(CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m,"right"), context)+", ");
-                                radicais.add(m);
+
+                            }
+                        }
+                    }
+                }
+
+                for (Molecula molec: cadeiaPrincipal.getMoleculas()
+                     ) {
+                    if(molec.getPrincipal()){
+                        //System.out.println(cadeiaPrincipal.verificarRamificacaoMaior(cadeiaPrincipal.contarCarbonosCadeiaPrincipal("", molec))[1]);
+
+                        cadeiaPrincipal.numerarCadeiaPrincipal(molec,"",
+                                cadeiaPrincipal.verificarRamificacaoMaior(cadeiaPrincipal.contarCarbonosCadeiaPrincipal("", molec)),true, "menor");
+                    }
+                }
+
+                for (Molecula m: cadeiaPrincipal.getMoleculas()
+                     ) {
+                   //System.out.println("id= "+m.getId()+" n: "+m.getNumeracaoNaCadeia());
+                }
+
+                //Correto abaixo
+                voltarCadeiaCopia(cadeiaPrincipal);
+
+                for (Molecula m: cadeiaCompleta.getMoleculas()) {
+                    Boolean existe= false;
+                    for (Molecula mo: cadeiaPrincipal.getMoleculas()) {
+                        if(m==mo) {
+                            existe = true;
+                            break;
+                        }
+                    }
+                    if(!existe){
+                        for (Molecula mol: cadeiaPrincipal.getMoleculas()
+                             ) {
+                            String nomeRad;
+                            Boolean existeRad = false;
+                            if(mol.getLigacaoSuperior()==m){
+                                mol.setLigacaoSuperior(null);
+                                nomeRad = CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m, "down"), context);
+
+                                for (String[] listaRad: radicais
+                                     ) {
+                                    if(nomeRad.equals(listaRad[1])){
+                                        String tmp = listaRad[0];
+                                        listaRad[0] = tmp+", "+mol.getNumeracaoNaCadeia();
+                                        existeRad = true;
+                                        break;
+                                    }
+                                }
+
+                               if(!existeRad){
+                                    String[] rads = new String[2];
+                                    rads[0] = String.valueOf(mol.getNumeracaoNaCadeia());
+                                    rads[1] = nomeRad;
+                                    radicais.add(rads);
+                               }
+
+
+                                //stringBuilder.append(mol.getNumeracaoNaCadeia() + "- " + CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m, "down"), context) + ", ");
+
+                            }
+                            else if(mol.getLigacaoDireita()==m){
+                                mol.setLigacaoDireita(null);
+                                nomeRad = CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m, "left"), context);
+
+                                for (String[] listaRad: radicais
+                                        ) {
+                                    if(nomeRad.equals(listaRad[1])){
+                                        String tmp = listaRad[0];
+                                        listaRad[0] = tmp+", "+mol.getNumeracaoNaCadeia();
+                                        existeRad = true;
+                                        break;
+                                    }
+                                }
+
+                                if(!existeRad){
+                                    String[] rads = new String[2];
+                                    rads[0] = String.valueOf(mol.getNumeracaoNaCadeia());
+                                    rads[1] = nomeRad;
+                                    radicais.add(rads);
+                                }
+                                //stringBuilder.append(mol.getNumeracaoNaCadeia()+"- "+CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m,"left"), context)+", ");
+
+                            }
+                            else if(mol.getLigacaoInferior()==m){
+                                mol.setLigacaoInferior(null);
+                                nomeRad = CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m, "up"), context);
+
+                                for (String[] listaRad: radicais
+                                        ) {
+                                    if(nomeRad.equals(listaRad[1])){
+                                        String tmp = listaRad[0];
+                                        listaRad[0] = tmp+", "+mol.getNumeracaoNaCadeia();
+                                        existeRad = true;
+                                        break;
+                                    }
+                                }
+
+                                if(!existeRad){
+                                    String[] rads = new String[2];
+                                    rads[0] = String.valueOf(mol.getNumeracaoNaCadeia());
+                                    rads[1] = nomeRad;
+                                    radicais.add(rads);
+                                }
+                                //stringBuilder.append(mol.getNumeracaoNaCadeia()+"- "+CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m,"up"), context)+", ");
+
+                            }
+                            else if(mol.getLigacaoEsquerda()==m){
+                                mol.setLigacaoEsquerda(null);
+                                nomeRad = CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m, "right"), context);
+
+                                for (String[] listaRad: radicais
+                                        ) {
+                                    if(nomeRad.equals(listaRad[1])){
+                                        String tmp = listaRad[0];
+                                        listaRad[0] = tmp+", "+mol.getNumeracaoNaCadeia();
+                                        existeRad = true;
+                                        break;
+                                    }
+                                }
+
+                                if(!existeRad){
+                                    String[] rads = new String[2];
+                                    rads[0] = String.valueOf(mol.getNumeracaoNaCadeia());
+                                    rads[1] = nomeRad;
+                                    radicais.add(rads);
+                                }
+                                //stringBuilder.append(mol.getNumeracaoNaCadeia()+"- "+CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m,"right"), context)+", ");
+
                             }
                         }
                     }
                 }
 
 
-                System.out.println(stringBuilder);
+                //System.out.println(stringBuilder);
 
                 nome = CadeiaAdapter.transformarString(
                         this.getCadeia().gerarNomeclatura(cadeiaPrincipal.getMoleculas().get(0), ""), context);
@@ -184,48 +307,40 @@ public class ControleActivityCadeia implements View.OnClickListener {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            String palavra = stringBuilder.toString();
+
+            String[] separaPorVirgula = palavra.split(", ");
+
+            ArrayList<String[]> componentes = new ArrayList<>();
+
+
+            for (int i = 0; i < separaPorVirgula.length; i++) {
+                componentes.add(separaPorVirgula[i].split("- "));
+            }
+
+            ArrayList<String> stgs = new ArrayList();
+            for (String[] lista : componentes) {
+                if (lista.length > 1) {
+                    System.out.println(lista[0] + "-" + lista[1]);
+
+
+                } else {
+
+                }
+            }
+
+            for (String[] rads: radicais
+                 ) {
+                stringBuilder.append(rads[0]+"- "+rads[1]+", ");
+            }
+
             context.alertNomenclatura(stringBuilder+nome);
 
 
             //Voltar a copia
 
-            try {
-                Cadeia cadeiaCompleta = new Cadeia();
-                cadeiaCompleta.setMoleculas(cadeia.getMoleculas());
-
-                for (Molecula m: cadeiaCompleta.getMoleculas()) {
-                    for (Molecula mo: cadeiaPrincipal.getMoleculas()) {
-                        if(m!=mo) {
-                                if(m.getLigacaoSuperior()==mo){
-                                    mo.setLigacaoInferior(m);
-
-
-
-                                }
-                                else if(m.getLigacaoDireita()==mo){
-                                    mo.setLigacaoEsquerda(m);
-
-
-
-                                }
-                                else if(m.getLigacaoInferior()==mo){
-                                    mo.setLigacaoSuperior(m);
-
-
-                                }
-                                else if(m.getLigacaoEsquerda()==mo){
-                                    mo.setLigacaoDireita(m);
-
-                                }
-                        }
-                    }
-
-
-
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            voltarCadeiaCopia(cadeiaPrincipal);
 
         }
 
@@ -247,6 +362,34 @@ public class ControleActivityCadeia implements View.OnClickListener {
 
         if(v.getId()==R.id.img_close || v.getId()==R.id.bt_ok){
             context.getAlerta().dismiss();
+        }
+    }
+
+    public void voltarCadeiaCopia(Cadeia cadeiaPrincipal){
+        try {
+            Cadeia cadeiaCompleta = new Cadeia();
+            cadeiaCompleta.setMoleculas(cadeia.getMoleculas());
+
+            for (Molecula m: cadeiaCompleta.getMoleculas()) {
+                for (Molecula mo: cadeiaPrincipal.getMoleculas()) {
+                    if(m!=mo) {
+                        if(m.getLigacaoSuperior()==mo){
+                            mo.setLigacaoInferior(m);
+                        }
+                        else if(m.getLigacaoDireita()==mo){
+                            mo.setLigacaoEsquerda(m);
+                        }
+                        else if(m.getLigacaoInferior()==mo){
+                            mo.setLigacaoSuperior(m);
+                        }
+                        else if(m.getLigacaoEsquerda()==mo){
+                            mo.setLigacaoDireita(m);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

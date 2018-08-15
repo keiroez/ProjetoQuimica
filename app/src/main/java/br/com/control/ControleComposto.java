@@ -222,7 +222,7 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
             molecula.setTipoLigDown(ligacao);
 
             moleculaCriadora.setLigacaoSuperior(molecula);
-            molecula.setTipoLigUp(ligacao);
+            moleculaCriadora.setTipoLigUp(ligacao);
         }
 
         if(lado.equals("right")){
@@ -230,7 +230,7 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
             molecula.setTipoLigLeft(ligacao);
 
             moleculaCriadora.setLigacaoDireita(molecula);
-            molecula.setTipoLigRight(ligacao);
+            moleculaCriadora.setTipoLigRight(ligacao);
         }
 
         if(lado.equals("down")){
@@ -238,7 +238,7 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
             molecula.setTipoLigUp(ligacao);
 
             moleculaCriadora.setLigacaoInferior(molecula);
-            molecula.setTipoLigDown(ligacao);
+            moleculaCriadora.setTipoLigDown(ligacao);
         }
 
         if(lado.equals("left")){
@@ -246,7 +246,7 @@ public class ControleComposto implements View.OnClickListener, AdapterView.OnIte
             molecula.setTipoLigRight(ligacao);
 
             moleculaCriadora.setLigacaoEsquerda(molecula);
-            molecula.setTipoLigLeft(ligacao);
+            moleculaCriadora.setTipoLigLeft(ligacao);
         }
 
         try {

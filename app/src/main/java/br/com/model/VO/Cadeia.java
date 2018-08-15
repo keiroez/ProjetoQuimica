@@ -70,17 +70,6 @@ public class Cadeia extends CadeiaGeradora implements Comparable<Cadeia>{
             return contadorLigacao;
     }
 
-//    @Override
-//    public int[] contarCarbono(int[] tmp, String anterior, Molecula molecula) {
-//        int[] contadorCarbono = verificarLigacoes(anterior, molecula);
-//        contadorCarbono[0]+=tmp[0];
-//        contadorCarbono[1]+=tmp[1];
-//        contadorCarbono[2]+=tmp[2];
-//        contadorCarbono[3]+=tmp[3];
-//
-//        return contadorCarbono;
-//    }
-
 
     //Lazy load
     public List<Molecula> getMoleculas() throws Exception {
@@ -90,9 +79,6 @@ public class Cadeia extends CadeiaGeradora implements Comparable<Cadeia>{
             return Fachada.listarMoleculas(this,context);
     }
 
-//    public List<Molecula> getMoleculas() {
-//            return moleculas;
-//    }
 
     public void setMoleculas(List<Molecula> moleculas) {
             this.moleculas = moleculas;
