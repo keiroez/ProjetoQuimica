@@ -14,6 +14,7 @@ public class Molecula {
     private int posY;
     private static int contador = 1;
     private int ligacoes = 4;
+    private int numeracaoNaCadeia;
 
     private int ramificacao= 0;
 
@@ -130,5 +131,13 @@ public class Molecula {
 
     public void setLigacoes(int ligacoes) {
         this.ligacoes = ligacoes;
+    }
+
+    public int getNumeracaoNaCadeia() {
+        return numeracaoNaCadeia;
+    }
+
+    public void setNumeracaoNaCadeia(int numeracaoNaCadeia) {
+        this.numeracaoNaCadeia = numeracaoNaCadeia;
     }
 }

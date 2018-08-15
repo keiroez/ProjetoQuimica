@@ -7,7 +7,7 @@ import java.util.List;
 
 import br.com.model.DAO.Fachada;
 
-public class Cadeia extends CadeiaGeradora {
+public class Cadeia extends CadeiaGeradora implements Comparable<Cadeia>{
     private List<Molecula> moleculas;
     private String nome;
     private int id = -1;
@@ -23,8 +23,6 @@ public class Cadeia extends CadeiaGeradora {
 //    public static Cadeia getCadeia(){
 //        return cadeia;
 //    }
-
-
 
     public int [] verificarLigacoes(String anterior, Molecula molecula){
         int[] contadorLigacao = new int[4];
@@ -122,5 +120,16 @@ public class Cadeia extends CadeiaGeradora {
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    @Override
+    public int compareTo(Cadeia cadeia) {
+        if (this.moleculas.size() > cadeia.moleculas.size()) {
+            return -1;
+        }
+        if (this.moleculas.size() < cadeia.moleculas.size()) {
+            return 1;
+        }
+        return 0;
     }
 }

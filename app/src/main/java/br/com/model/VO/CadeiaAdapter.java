@@ -35,5 +35,20 @@ public class CadeiaAdapter {
         return nomeclatura;
     }
 
+    public static String transformarStringRadical(int[] vetor, Context context) throws Exception {
+        String nomeclatura="";
+        int[] cadeiaVetor = vetor;
+
+        String prefixo = Fachada.buscarPrefixoQtd(cadeiaVetor[0], context);
+
+
+        String sufixo = "il";
+
+        nomeclatura = prefixo+sufixo;
+
+
+        return nomeclatura;
+    }
+
 
 }

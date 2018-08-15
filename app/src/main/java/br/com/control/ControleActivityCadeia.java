@@ -56,17 +56,20 @@ public class ControleActivityCadeia implements View.OnClickListener {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            System.out.println("Qtd C= "+cont[0]);
-//            System.out.println("simples= "+cont[1]);
-//            System.out.println("dupla= "+cont[2]);
-//            System.out.println("tripla= "+cont[3]);
+
+            Cadeia cadeiaPrincipal =  new Cadeia();
             String nome = "Erro";
+            String radical = "";
+            StringBuilder stringBuilder = new StringBuilder(radical);
             try {
-                nome = CadeiaAdapter.transformarString(
-                        this.getCadeia().gerarNomeclatura(this.getCadeia().getMoleculas().get(0), ""), context);
-                //System.out.println(nome);
+//                nome = CadeiaAdapter.transformarString(
+//                        this.getCadeia().gerarNomeclatura(this.getCadeia().getMoleculas().get(0), ""), context);
+
+
 
                 List<Molecula> lista = new ArrayList<>();
+
+
                 for (Molecula mol: cadeia.getMoleculas()
                      ) {
                     if(mol.getTipoLigUp().equals("tripla") ||
@@ -96,12 +99,15 @@ public class ControleActivityCadeia implements View.OnClickListener {
                             ) {
                         if (mole.getTipoLigUp().equals("tripla") || mole.getTipoLigRight().equals("tripla") ||
                                 mole.getTipoLigDown().equals("tripla") || mole.getTipoLigLeft().equals("tripla")) {
+                            cadeiaPrincipal.setMoleculas(cadeia.verificarCadeiaPrincipal(mole, "", true));
+
                             for (Molecula m : cadeia.verificarCadeiaPrincipal(mole, "", true)) {
                                 System.out.println(m.getId());
                             }
                             break;
                         } else if (mole.getTipoLigUp().equals("dupla") || mole.getTipoLigRight().equals("dupla") ||
                                 mole.getTipoLigDown().equals("dupla") || mole.getTipoLigLeft().equals("dupla")) {
+                            cadeiaPrincipal.setMoleculas(cadeia.verificarCadeiaPrincipal(mole, "", true));
                             for (Molecula m : cadeia.verificarCadeiaPrincipal(mole, "", true)) {
                                 System.out.println(m.getId());
                             }
@@ -118,16 +124,108 @@ public class ControleActivityCadeia implements View.OnClickListener {
                             break;
                         }
                     }
-                    for (Molecula m : cadeia.verificarCadeiaPrincipal2(moleculaInicial, "", true)) {
-                        System.out.println(m.getId());
+                    cadeiaPrincipal.setMoleculas(cadeia.verificarCadeiaPrincipal(moleculaInicial, "", true));
+                    for (Molecula m : cadeia.verificarCadeiaPrincipal(moleculaInicial, "", true)) {
+                        //System.out.println(m.getId());
                     }
+                }
+
+
+                List<Molecula> radicais = new ArrayList<>();
+                Cadeia cadeiaCompleta = new Cadeia();
+                cadeiaCompleta.setMoleculas(cadeia.getMoleculas());
+
+
+
+                for (Molecula m: cadeiaCompleta.getMoleculas()) {
+                    Boolean existe= false;
+                    for (Molecula mo: cadeiaPrincipal.getMoleculas()) {
+                        if(m==mo) {
+                            existe = true;
+                            break;
+                        }
+                    }
+
+
+                    if(!existe){
+                        for (Molecula mol: cadeiaPrincipal.getMoleculas()
+                             ) {
+                            if(mol.getLigacaoSuperior()==m){
+                                mol.setLigacaoSuperior(null);
+                                stringBuilder.append(CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m,"down"), context)+", ");
+                                radicais.add(m);
+                            }
+                            else if(mol.getLigacaoDireita()==m){
+                                mol.setLigacaoDireita(null);
+                                stringBuilder.append(CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m,"left"), context)+", ");
+                                radicais.add(m);
+                            }
+                            else if(mol.getLigacaoInferior()==m){
+                                mol.setLigacaoInferior(null);
+                                stringBuilder.append(CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m,"up"), context)+", ");
+                                radicais.add(m);
+                            }
+                            else if(mol.getLigacaoEsquerda()==m){
+                                mol.setLigacaoEsquerda(null);
+                                stringBuilder.append(CadeiaAdapter.transformarStringRadical(cadeia.gerarNomeclatura(m,"right"), context)+", ");
+                                radicais.add(m);
+                            }
+                        }
+                    }
+                }
+
+
+                System.out.println(stringBuilder);
+
+                nome = CadeiaAdapter.transformarString(
+                        this.getCadeia().gerarNomeclatura(cadeiaPrincipal.getMoleculas().get(0), ""), context);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            context.alertNomenclatura(stringBuilder+nome);
+
+
+            //Voltar a copia
+
+            try {
+                Cadeia cadeiaCompleta = new Cadeia();
+                cadeiaCompleta.setMoleculas(cadeia.getMoleculas());
+
+                for (Molecula m: cadeiaCompleta.getMoleculas()) {
+                    for (Molecula mo: cadeiaPrincipal.getMoleculas()) {
+                        if(m!=mo) {
+                                if(m.getLigacaoSuperior()==mo){
+                                    mo.setLigacaoInferior(m);
+
+
+
+                                }
+                                else if(m.getLigacaoDireita()==mo){
+                                    mo.setLigacaoEsquerda(m);
+
+
+
+                                }
+                                else if(m.getLigacaoInferior()==mo){
+                                    mo.setLigacaoSuperior(m);
+
+
+                                }
+                                else if(m.getLigacaoEsquerda()==mo){
+                                    mo.setLigacaoDireita(m);
+
+                                }
+                        }
+                    }
+
+
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            context.alertNomenclatura(nome);
-
-
 
         }
 

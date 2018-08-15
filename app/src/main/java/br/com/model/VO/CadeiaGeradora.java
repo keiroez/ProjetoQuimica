@@ -1,12 +1,12 @@
 package br.com.model.VO;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class CadeiaGeradora {
     private List<Cadeia> radicais =  new ArrayList<>();
     private List<Molecula> cadeiaPrincipal = new ArrayList<>();
-
 
 
     //TEMPLATE METHOD
@@ -269,23 +269,40 @@ public abstract class CadeiaGeradora {
         }
 
 
+
+
         if(inicial){
-            for (Molecula m: cadeiaPrincipalUp.getMoleculas()
-                 ) {
-                cadeiaPrincipal.getMoleculas().add(m);
-            }
-            for (Molecula m: cadeiaPrincipalRight.getMoleculas()
-                    ) {
-                cadeiaPrincipal.getMoleculas().add(m);
-            }
-            for (Molecula m: cadeiaPrincipalDown.getMoleculas()
-                    ) {
-                cadeiaPrincipal.getMoleculas().add(m);
-            }
-            for (Molecula m: cadeiaPrincipalLeft.getMoleculas()
-                    ) {
-                cadeiaPrincipal.getMoleculas().add(m);
-            }
+            List<Cadeia> cadeias = new ArrayList<>();
+            cadeias.add(cadeiaPrincipalUp);
+            cadeias.add(cadeiaPrincipalRight);
+            cadeias.add(cadeiaPrincipalDown);
+            cadeias.add(cadeiaPrincipalLeft);
+
+            Collections.sort(cadeias);
+                    for (int i = 0; i < 2; i++) {
+                        for (Molecula m : cadeias.get(i).getMoleculas()) {
+                            cadeiaPrincipal.getMoleculas().add(m);
+                        }
+                    }
+
+
+//
+//            for (Molecula m: cadeiaPrincipalUp.getMoleculas()
+//                 ) {
+//                cadeiaPrincipal.getMoleculas().add(m);
+//            }
+//            for (Molecula m: cadeiaPrincipalRight.getMoleculas()
+//                    ) {
+//                cadeiaPrincipal.getMoleculas().add(m);
+//            }
+//            for (Molecula m: cadeiaPrincipalDown.getMoleculas()
+//                    ) {
+//                cadeiaPrincipal.getMoleculas().add(m);
+//            }
+//            for (Molecula m: cadeiaPrincipalLeft.getMoleculas()
+//                    ) {
+//                cadeiaPrincipal.getMoleculas().add(m);
+//            }
         }
 
 
@@ -336,7 +353,7 @@ public abstract class CadeiaGeradora {
             }
         }
 
-//        if(!inicial) {
+        if(!inicial) {
             //Verificar cadeia maior
             if (cadeiaPrincipalUp.getMoleculas().size() > cadeiaPrincipalRight.getMoleculas().size()
                     && cadeiaPrincipalUp.getMoleculas().size() > cadeiaPrincipalDown.getMoleculas().size()
@@ -367,9 +384,9 @@ public abstract class CadeiaGeradora {
                     cadeiaPrincipal.getMoleculas().add(m);
                 }
             }
+        }
 
             //ramificaçoes iguais
-            else {
                 //UP
                 if (cadeiaPrincipalUp.getMoleculas().size() == cadeiaPrincipalRight.getMoleculas().size()) {
                     for (Molecula m : cadeiaPrincipalUp.getMoleculas()
@@ -408,27 +425,25 @@ public abstract class CadeiaGeradora {
                         cadeiaPrincipal.getMoleculas().add(m);
                     }
                 }
-            }
-//        }
 
-//        if(inicial){
-//            for (Molecula m: cadeiaPrincipalUp.getMoleculas()
-//                    ) {
-//                cadeiaPrincipal.getMoleculas().add(m);
-//            }
-//            for (Molecula m: cadeiaPrincipalRight.getMoleculas()
-//                    ) {
-//                cadeiaPrincipal.getMoleculas().add(m);
-//            }
-//            for (Molecula m: cadeiaPrincipalDown.getMoleculas()
-//                    ) {
-//                cadeiaPrincipal.getMoleculas().add(m);
-//            }
-//            for (Molecula m: cadeiaPrincipalLeft.getMoleculas()
-//                    ) {
-//                cadeiaPrincipal.getMoleculas().add(m);
-//            }
-//        }
+        if(inicial){
+            for (Molecula m: cadeiaPrincipalUp.getMoleculas()
+                    ) {
+                cadeiaPrincipal.getMoleculas().add(m);
+            }
+            for (Molecula m: cadeiaPrincipalRight.getMoleculas()
+                    ) {
+                cadeiaPrincipal.getMoleculas().add(m);
+            }
+            for (Molecula m: cadeiaPrincipalDown.getMoleculas()
+                    ) {
+                cadeiaPrincipal.getMoleculas().add(m);
+            }
+            for (Molecula m: cadeiaPrincipalLeft.getMoleculas()
+                    ) {
+                cadeiaPrincipal.getMoleculas().add(m);
+            }
+        }
 
         return cadeiaPrincipal.getMoleculas();
 
